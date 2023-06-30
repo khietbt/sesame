@@ -8,4 +8,4 @@ spring:
       server:
         bootstrap: false
         native:
-          searchLocations: files
+          searchLocations: ${SPRING_CLOUD_CONFIG_SERVER_NATIVE_SEARCH_LOCATIONS}
