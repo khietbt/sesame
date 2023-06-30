@@ -2,10 +2,9 @@ server:
   port: 8001
 spring:
   profiles:
-    include: native
+    include: git
   cloud:
     config:
       server:
-        bootstrap: false
-        native:
-          searchLocations: ${SPRING_CLOUD_CONFIG_SERVER_NATIVE_SEARCH_LOCATIONS}
+        git:
+          uri: https://github.com/khietbt/sesame-config-files.git
