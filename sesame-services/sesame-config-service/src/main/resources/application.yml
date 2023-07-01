@@ -1,10 +1,20 @@
 server:
   port: 8001
 spring:
-  profiles:
-    include: git
+  application:
+    name: sesame-config-service
   cloud:
     config:
       server:
         git:
           uri: https://github.com/khietbt/sesame-config-files.git
+  profiles:
+    include: git
+eureka:
+  client:
+    fetchRegistry: false
+    registerWithEureka: true
+    serviceUrl:
+      defaultZone: ${EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE}
+  instance:
+    hostname: ${EUREKA_INSTANCE_HOSTNAME}
