@@ -18,3 +18,14 @@ eureka:
       defaultZone: ${EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE}
   instance:
     hostname: ${EUREKA_INSTANCE_HOSTNAME}
+
+management:
+  endpoints:
+    web:
+      discovery:
+        enabled: true
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
