@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <packaging>pom</packaging>
   <groupId>io.github.khietbt</groupId>
   <artifactId>sesame</artifactId>
+  <version>1.0.0</version>
+  <packaging>pom</packaging>
   <name>sesame</name>
   <description>Root directory</description>
-  <version>1.0.0</version>
+
+  <modules>
+    <module>sesame-services</module>
+    <module>sesame-libraries</module>
+  </modules>
 
   <properties>
     <java.version>17</java.version>
@@ -27,10 +30,12 @@
       <version>${lombok.version}</version>
       <scope>provided</scope>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/com.github.ekryd.sortpom/sortpom-maven-plugin -->
+    <dependency>
+      <groupId>com.github.ekryd.sortpom</groupId>
+      <artifactId>sortpom-maven-plugin</artifactId>
+      <version>3.2.1</version>
+    </dependency>
   </dependencies>
-
-  <modules>
-    <module>sesame-services</module>
-    <module>sesame-libraries</module>
-  </modules>
 </project>
+
