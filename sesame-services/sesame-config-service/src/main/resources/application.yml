@@ -33,3 +33,7 @@ management:
   endpoint:
     health:
       show-details: always
+
+logging:
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
