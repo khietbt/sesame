@@ -1,5 +1,5 @@
 server:
-  port: 8001
+  port: ${SERVER_PORT}
 spring:
   application:
     name: sesame-config-service
@@ -10,6 +10,10 @@ spring:
           uri: https://github.com/khietbt/sesame-config-files.git
   profiles:
     include: git
+  security:
+    user:
+      name: ${SPRING_CLOUD_CONFIG_USERNAME}
+      password: ${SPRING_CLOUD_CONFIG_PASSWORD}
 eureka:
   client:
     fetchRegistry: false
