@@ -8,7 +8,5 @@ SPRING_DATASOURCE_USERNAME: admin
 
 spring:
   jpa:
-    generate-ddl: true
-    hibernate:
-      ddl-auto: create-drop
+    generate-ddl: false
     open-in-view: false

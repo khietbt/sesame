@@ -5,22 +5,26 @@ import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;
 import java.sql.Timestamp;
 import java.util.UUID;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @MappedSuperclass
-@NoArgsConstructor
 @SuperBuilder
 public abstract class Auditable<T> {
 
   @Id
-  private UUID id;
+  private String id;
 
   @CreatedBy
   private T createdBy;
@@ -36,6 +40,6 @@ public abstract class Auditable<T> {
 
   @PrePersist
   public void prePersist() {
-    id = UUID.randomUUID();
+    id = UUID.randomUUID().toString();
   }
 }
