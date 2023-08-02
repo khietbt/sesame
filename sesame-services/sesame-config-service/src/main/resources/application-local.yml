@@ -1,5 +1,14 @@
 EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE: http://localhost:8002/eureka
 EUREKA_INSTANCE_HOSTNAME: localhost
 SERVER_PORT: 8001
-SPRING_CLOUD_CONFIG_USERNAME: admin
-SPRING_CLOUD_CONFIG_PASSWORD: admin
+SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.h2.Driver
+SPRING_DATASOURCE_PASSWORD: admin
+SPRING_DATASOURCE_URL: jdbc:h2:file:~/sesame-config-service;AUTO_SERVER=TRUE
+SPRING_DATASOURCE_USERNAME: admin
+
+spring:
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create-drop
+    open-in-view: false

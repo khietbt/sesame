@@ -3,17 +3,19 @@ server:
 spring:
   application:
     name: sesame-config-service
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    driver-class-name: ${SPRING_DATASOURCE_DRIVER_CLASS_NAME}
   cloud:
     config:
       server:
-        git:
-          uri: https://github.com/khietbt/sesame-config-files.git
+        jdbc:
+          sql: SELECT k, v FROM properties AS p WHERE p.application = ? AND p.profile = ? AND p.label = ?
   profiles:
-    include: git
-  security:
-    user:
-      name: ${SPRING_CLOUD_CONFIG_USERNAME}
-      password: ${SPRING_CLOUD_CONFIG_PASSWORD}
+    include: jdbc
+
 eureka:
   client:
     fetchRegistry: false
