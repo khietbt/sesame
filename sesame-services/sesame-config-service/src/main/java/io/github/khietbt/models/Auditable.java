@@ -16,11 +16,11 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
 @Getter
-@Setter
-@ToString
-@RequiredArgsConstructor
 @MappedSuperclass
+@RequiredArgsConstructor
+@Setter
 @SuperBuilder
+@ToString
 public abstract class Auditable<T> {
 
   @Id

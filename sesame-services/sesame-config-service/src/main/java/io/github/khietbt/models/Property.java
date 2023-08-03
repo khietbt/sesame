@@ -2,15 +2,15 @@ package io.github.khietbt.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-@Data
 @Entity
-@EqualsAndHashCode(callSuper = true)
+@Getter
 @NoArgsConstructor
+@Setter
 @SuperBuilder
 @Table(name = "properties")
 public class Property extends Auditable<String> {
