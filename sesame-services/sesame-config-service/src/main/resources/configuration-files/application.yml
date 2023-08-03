@@ -1,16 +1,3 @@
-server:
-  port: ${SERVER_PORT}
-spring:
-  application:
-    name: sesame-config-service
-  cloud:
-    config:
-      server:
-        native:
-          search-locations: classpath:/configuration-files
-  profiles:
-    include: native
-
 eureka:
   client:
     fetchRegistry: false
@@ -19,12 +6,12 @@ eureka:
       defaultZone: ${EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE}
   instance:
     hostname: ${EUREKA_INSTANCE_HOSTNAME}
+server:
+  port: ${SERVER_PORT}
 
 management:
   endpoints:
     web:
-      discovery:
-        enabled: true
       exposure:
         include: "*"
   endpoint:
