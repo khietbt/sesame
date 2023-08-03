@@ -24,7 +24,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 public abstract class Auditable<T> {
 
   @Id
-  private String id;
+  private UUID id;
 
   @CreatedBy
   private T createdBy;
@@ -40,6 +40,6 @@ public abstract class Auditable<T> {
 
   @PrePersist
   public void prePersist() {
-    id = UUID.randomUUID().toString();
+    id = UUID.randomUUID();
   }
 }
