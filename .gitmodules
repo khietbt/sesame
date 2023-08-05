@@ -4,3 +4,6 @@
 [submodule "sesame-config-files"]
 	path = sesame-config-files
 	url = git@github.com:khietbt/sesame-config-files.git
+[submodule "vendors/keycloak"]
+	path = vendors/keycloak
+	url = git@github.com:khietbt/keycloak.git
