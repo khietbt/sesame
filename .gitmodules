@@ -1,9 +1,3 @@
 [submodule "khietbt.github.io"]
 	path = khietbt.github.io
 	url = git@github.com:khietbt/khietbt.github.io.git
-[submodule "sesame-config-files"]
-	path = sesame-config-files
-	url = git@github.com:khietbt/sesame-config-files.git
-[submodule "vendors/keycloak"]
-	path = vendors/keycloak
-	url = git@github.com:khietbt/keycloak.git
