@@ -24,9 +24,7 @@ import org.springframework.data.relational.core.mapping.Column;
 public class Auditable {
 
   @Id
-  private Long id;
-
-  private UUID uuid;
+  private UUID id;
 
   @CreatedBy
   @Column("created_by")

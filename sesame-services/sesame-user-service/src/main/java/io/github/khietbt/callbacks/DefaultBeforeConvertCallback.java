@@ -15,8 +15,8 @@ public class DefaultBeforeConvertCallback<T  extends Auditable> implements Befor
 
   @Override
   public @NonNull Publisher<T> onBeforeConvert(@NonNull T entity, @NonNull SqlIdentifier table) {
-    if (entity.getUuid() == null) {
-      entity.setUuid(UUID.randomUUID());
+    if (entity.getId() == null) {
+      entity.setId(UUID.randomUUID());
     }
 
     return Mono.just(entity);
