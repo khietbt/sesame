@@ -9,3 +9,4 @@ spring:
     password: ${SESAME_USER_SERVICE_DB_PASSWORD}
     user: ${SESAME_USER_SERVICE_DB_USERNAME}
     enabled: true
+    baseline-on-migrate: true
