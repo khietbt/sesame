@@ -1,6 +1,7 @@
 package io.github.khietbt.entities;
 
 import java.time.Instant;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +24,9 @@ import org.springframework.data.relational.core.mapping.Column;
 public class Auditable {
 
   @Id
-  private String id;
+  private Long id;
+
+  private UUID uuid;
 
   @CreatedBy
   @Column("created_by")
