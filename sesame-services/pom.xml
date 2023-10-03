@@ -20,6 +20,7 @@
     <module>sesame-authorization-service</module>
     <module>sesame-config-service</module>
     <module>sesame-discovery-service</module>
+    <module>sesame-profile-service</module>
     <module>sesame-user-service</module>
   </modules>
 
