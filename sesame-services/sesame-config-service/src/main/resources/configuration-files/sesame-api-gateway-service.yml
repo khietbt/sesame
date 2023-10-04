@@ -1,0 +1,13 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: sesame-user-service
+          uri: lb://SESAME-USER-SERVICE
+          predicates:
+            - Path=/api/v1/users/**
+          filters:
+            - RewritePath=/api/v1/users/(?<remains>.*), /$\{remains}
+      discovery:
+        locator:
+          enabled: true
