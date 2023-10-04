@@ -7,7 +7,7 @@ spring:
     config:
       server:
         native:
-          search-locations: classpath:/configuration-files
+          search-locations: ${SPRING_CLOUD_SERVER_NATIVE_SEARCH_LOCATIONS}
   profiles:
     include: native
 
