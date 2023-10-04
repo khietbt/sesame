@@ -5,9 +5,9 @@ spring:
         - id: sesame-user-service
           uri: lb://SESAME-USER-SERVICE
           predicates:
-            - Path=/api/v1/users/**
+            - Path=/api/v1/user-service/**
           filters:
-            - RewritePath=/api/v1/users/(?<remains>.*), /$\{remains}
+            - RewritePath=/api/v1/user-service/(?<remains>.*), /$\{remains}
       discovery:
         locator:
           enabled: true
