@@ -3,7 +3,7 @@ spring:
     gateway:
       routes:
         - id: sesame-user-service
-          uri: lb://SESAME-USER-SERVICE
+          uri: lb://sesame-user-service
           predicates:
             - Path=/api/v1/user-service/**
           filters:
