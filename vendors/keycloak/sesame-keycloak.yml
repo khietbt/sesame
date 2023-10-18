@@ -1,4 +1,10 @@
 services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: sesame-keycloak-service
+      POSTGRES_USER: sesame
+      POSTGRES_PASSWORD: sesame
   auth:
     image: quay.io/keycloak/keycloak:latest
     ports:
@@ -6,6 +12,15 @@ services:
     environment:
       KEYCLOAK_ADMIN: sesame
       KEYCLOAK_ADMIN_PASSWORD: sesame
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres/sesame-keycloak-service
+      KC_DB_USERNAME: sesame
+      KC_DB_PASSWORD: sesame
+      KC_HOSTNAME: localhost
     command:
       - start-dev
-      - --http-port=8180
+      - --http-port 8180
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    depends_on:
+      - postgres
