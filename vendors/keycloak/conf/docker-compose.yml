@@ -1,12 +1,14 @@
 services:
   postgres:
     image: postgres:latest
+    container_name: sesame_keycloak-database
     environment:
       POSTGRES_DB: sesame-keycloak-service
       POSTGRES_USER: sesame
       POSTGRES_PASSWORD: sesame
-  auth:
+  keycloak:
     image: quay.io/keycloak/keycloak:latest
+    container_name: sesame-keycloak-service
     ports:
       - "8180:8180"
     environment:
@@ -20,7 +22,8 @@ services:
     command:
       - start-dev
       - --http-port 8180
-    extra_hosts:
-      - host.docker.internal:host-gateway
+      - --import-realm
     depends_on:
       - postgres
+    volumes:
+      - ${TOP_DIR}/conf:/opt/keycloak/data/import
