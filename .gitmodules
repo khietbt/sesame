@@ -3,5 +3,6 @@
 	path = khietbt.github.io
 	url = git@github.com:khietbt/khietbt.github.io.git
 [submodule "vendors/keycloak"]
+	branch = master
 	path = vendors/keycloak
 	url = git@github.com:khietbt/sesame-keycloak-service.git
