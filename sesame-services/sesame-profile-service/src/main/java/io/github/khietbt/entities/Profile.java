@@ -1,10 +1,6 @@
 package io.github.khietbt.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.springframework.data.relational.core.mapping.Table;
 
@@ -15,13 +11,13 @@ import org.springframework.data.relational.core.mapping.Table;
 @SuperBuilder
 @Table("profiles")
 @ToString(
-  callSuper = true
+        callSuper = true
 )
 public class Profile extends Auditable {
 
-  private String userId;
+    private String userId;
 
-  private String email;
+    private String email;
 
-  private String phone;
+    private String phone;
 }

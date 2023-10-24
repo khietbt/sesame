@@ -3,8 +3,6 @@ package io.github.khietbt.models;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
-import java.sql.Timestamp;
-import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +15,9 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.sql.Timestamp;
+import java.util.UUID;
+
 @AllArgsConstructor
 @Audited
 @EntityListeners(AuditingEntityListener.class)
@@ -27,19 +28,19 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @SuperBuilder
 public abstract class Auditable<T> {
 
-  @Id
-  private UUID id;
+    @Id
+    private UUID id;
 
-  @CreatedBy
-  private T createdBy;
+    @CreatedBy
+    private T createdBy;
 
-  @LastModifiedBy
-  private T updatedBy;
+    @LastModifiedBy
+    private T updatedBy;
 
-  @CreatedDate
-  private Timestamp createdAt;
+    @CreatedDate
+    private Timestamp createdAt;
 
-  @LastModifiedDate
-  private Timestamp updatedAt;
+    @LastModifiedDate
+    private Timestamp updatedAt;
 }
   

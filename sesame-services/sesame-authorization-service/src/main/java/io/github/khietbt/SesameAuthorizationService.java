@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class SesameAuthorizationService {
 
-  public static void main(String[] args) {
-    SpringApplication.run(SesameAuthorizationService.class, args);
-  }
+    public static void main(String[] args) {
+        SpringApplication.run(SesameAuthorizationService.class, args);
+    }
 }

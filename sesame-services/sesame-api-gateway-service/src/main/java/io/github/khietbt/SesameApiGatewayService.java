@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class SesameApiGatewayService {
 
-  public static void main(String[] args) {
-    SpringApplication.run(SesameApiGatewayService.class, args);
-  }
+    public static void main(String[] args) {
+        SpringApplication.run(SesameApiGatewayService.class, args);
+    }
 }

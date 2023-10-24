@@ -2,43 +2,43 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>io.github.khietbt</groupId>
-  <artifactId>sesame</artifactId>
-  <version>1.0.0</version>
-  <packaging>pom</packaging>
-  <name>sesame</name>
-  <description>Root directory</description>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>io.github.khietbt</groupId>
+    <artifactId>sesame</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+    <name>sesame</name>
+    <description>Root directory</description>
 
-  <modules>
-    <module>sesame-services</module>
-    <module>sesame-libraries</module>
-  </modules>
+    <modules>
+        <module>sesame-services</module>
+        <module>sesame-libraries</module>
+    </modules>
 
-  <properties>
-    <java.version>20</java.version>
-    <maven.compiler.source>20</maven.compiler.source>
-    <maven.compiler.target>20</maven.compiler.target>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <spring-boot.version>3.1.4</spring-boot.version>
-    <spring-cloud.version>2022.0.4</spring-cloud.version>
-    <lombok.version>1.18.30</lombok.version>
-    <micrometer-tracing.version>1.1.5</micrometer-tracing.version>
-  </properties>
+    <properties>
+        <java.version>20</java.version>
+        <maven.compiler.source>20</maven.compiler.source>
+        <maven.compiler.target>20</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring-boot.version>3.1.4</spring-boot.version>
+        <spring-cloud.version>2022.0.4</spring-cloud.version>
+        <lombok.version>1.18.30</lombok.version>
+        <micrometer-tracing.version>1.1.5</micrometer-tracing.version>
+    </properties>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <version>${lombok.version}</version>
-      <scope>provided</scope>
-    </dependency>
-    <!-- https://mvnrepository.com/artifact/com.github.ekryd.sortpom/sortpom-maven-plugin -->
-    <dependency>
-      <groupId>com.github.ekryd.sortpom</groupId>
-      <artifactId>sortpom-maven-plugin</artifactId>
-      <version>3.2.1</version>
-    </dependency>
-  </dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.github.ekryd.sortpom/sortpom-maven-plugin -->
+        <dependency>
+            <groupId>com.github.ekryd.sortpom</groupId>
+            <artifactId>sortpom-maven-plugin</artifactId>
+            <version>3.2.1</version>
+        </dependency>
+    </dependencies>
 </project>
 

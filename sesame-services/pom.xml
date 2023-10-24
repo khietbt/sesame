@@ -2,65 +2,65 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>io.github.khietbt</groupId>
-    <artifactId>sesame</artifactId>
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.github.khietbt</groupId>
+        <artifactId>sesame</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <artifactId>sesame-services</artifactId>
     <version>1.0.0</version>
-  </parent>
+    <packaging>pom</packaging>
+    <name>sesame-services</name>
+    <description>Service directory</description>
 
-  <artifactId>sesame-services</artifactId>
-  <version>1.0.0</version>
-  <packaging>pom</packaging>
-  <name>sesame-services</name>
-  <description>Service directory</description>
+    <modules>
+        <module>sesame-api-gateway-service</module>
+        <module>sesame-authorization-service</module>
+        <module>sesame-config-service</module>
+        <module>sesame-discovery-service</module>
+        <module>sesame-profile-service</module>
+        <module>sesame-user-service</module>
+    </modules>
 
-  <modules>
-    <module>sesame-api-gateway-service</module>
-    <module>sesame-authorization-service</module>
-    <module>sesame-config-service</module>
-    <module>sesame-discovery-service</module>
-    <module>sesame-profile-service</module>
-    <module>sesame-user-service</module>
-  </modules>
-
-  <dependencyManagement>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.micrometer</groupId>
+                <artifactId>micrometer-tracing-bom</artifactId>
+                <version>${micrometer-tracing.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     <dependencies>
-      <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-dependencies</artifactId>
-        <version>${spring-boot.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.springframework.cloud</groupId>
-        <artifactId>spring-cloud-dependencies</artifactId>
-        <version>${spring-cloud.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>io.micrometer</groupId>
-        <artifactId>micrometer-tracing-bom</artifactId>
-        <version>${micrometer-tracing.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-tracing</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
     </dependencies>
-  </dependencyManagement>
-  <dependencies>
-    <dependency>
-      <groupId>io.micrometer</groupId>
-      <artifactId>micrometer-tracing</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-actuator</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-    </dependency>
-  </dependencies>
 </project>

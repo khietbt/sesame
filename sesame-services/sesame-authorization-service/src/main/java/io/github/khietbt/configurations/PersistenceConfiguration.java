@@ -14,8 +14,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableJpaRepositories
 public class PersistenceConfiguration {
 
-  @Bean
-  public AuditorAware<String> auditorProvider() {
-    return new AuditorAwareImpl();
-  }
+    @Bean
+    public AuditorAware<String> auditorProvider() {
+        return new AuditorAwareImpl();
+    }
 }

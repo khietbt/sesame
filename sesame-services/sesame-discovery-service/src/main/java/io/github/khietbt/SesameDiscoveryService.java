@@ -8,7 +8,7 @@ import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 @SpringBootApplication
 public class SesameDiscoveryService {
 
-  public static void main(String[] args) {
-    SpringApplication.run(SesameDiscoveryService.class, args);
-  }
+    public static void main(String[] args) {
+        SpringApplication.run(SesameDiscoveryService.class, args);
+    }
 }

@@ -8,8 +8,8 @@ import reactor.core.publisher.Mono;
 @Configuration
 public class DatabaseConfiguration {
 
-  @Bean
-  public ReactiveAuditorAware<String> auditorAware() {
-    return () -> Mono.just("admin");
-  }
+    @Bean
+    public ReactiveAuditorAware<String> auditorAware() {
+        return () -> Mono.just("admin");
+    }
 }
