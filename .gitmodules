@@ -6,3 +6,7 @@
 	branch = master
 	path = vendors/keycloak
 	url = git@github.com:khietbt/sesame-keycloak-service.git
+[submodule "sesame-services/sesame-config-service"]
+	path = sesame-services/sesame-config-service
+	url = git@github.com:khietbt/sesame-config-service.git
+	branch = master
