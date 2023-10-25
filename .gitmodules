@@ -14,3 +14,7 @@
 	path = sesame-services/sesame-discovery-service
 	url = git@github.com:khietbt/sesame-discovery-service.git
 	branch = master
+[submodule "sesame-services/sesame-api-gateway-service"]
+	path = sesame-services/sesame-api-gateway-service
+	url = git@github.com:khietbt/sesame-api-gateway-service.git
+	branch = master
