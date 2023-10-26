@@ -18,3 +18,7 @@
 	path = sesame-services/sesame-api-gateway-service
 	url = git@github.com:khietbt/sesame-api-gateway-service.git
 	branch = master
+[submodule "sesame-services/sesame-profile-service"]
+	path = sesame-services/sesame-profile-service
+	url = git@github.com:khietbt/sesame-profile-service.git
+	branch = master
