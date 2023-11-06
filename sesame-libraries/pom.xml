@@ -11,6 +11,6 @@
     <description>Lib directory for some common things</description>
 
     <modules>
-        <module>sesame-keycloak-library</module>
+        <module>sesame-security-library</module>
     </modules>
 </project>
