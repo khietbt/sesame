@@ -22,3 +22,7 @@
 	path = sesame-services/sesame-profile-service
 	url = git@github.com:khietbt/sesame-profile-service.git
 	branch = master
+[submodule "sesame-libraries/sesame-keycloak-library"]
+	path = sesame-libraries/sesame-keycloak-library
+	url = git@github.com:khietbt/sesame-keycloak-library.git
+	branch = master

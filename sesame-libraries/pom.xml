@@ -9,4 +9,8 @@
     <packaging>pom</packaging>
     <name>sesame-libraries</name>
     <description>Lib directory for some common things</description>
+
+    <modules>
+        <module>sesame-keycloak-library</module>
+    </modules>
 </project>
