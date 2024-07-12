@@ -1,0 +1,7 @@
+server:
+  port: 8005
+
+spring:
+  threads:
+    virtual:
+      enabled: true
