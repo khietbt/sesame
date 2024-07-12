@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: sesame-api-gateway-service
+  cloud:
+    gateway:
+      routes:
+        - id: sesame-profile-service
+          uri: lb://sesame-profile-service
+          predicates:
+            - Path=/api/v1/sesame-profile-service/**
+          filters:
+            - RewritePath=/api/v1/sesame-profile-service/(?<remains>.*), /$\{remains}
+      discovery:
+        locator:
+          enabled: true
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: false
+    serviceUrl:
+      defaultZone: ${EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE}
+  instance:
+    hostname: ${EUREKA_INSTANCE_HOSTNAME}
+
+server:
+  port: ${SERVER_PORT}
+management.endpoint.gateway.enabled: true
+management.endpoints.web.exposure.include: '*'

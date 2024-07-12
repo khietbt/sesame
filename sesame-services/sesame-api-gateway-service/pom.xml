@@ -4,12 +4,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>sesame-profile-service</artifactId>
-    <name>sesame-profile-service</name>
-    <groupId>khietbt.github.io</groupId>
+    <artifactId>sesame-api-gateway-service</artifactId>
+    <description>Spring api gateway service</description>
+    <groupId>io.github.khietbt</groupId>
     <version>1.0.0</version>
-    <description>Sesame profile service</description>
-
 
     <properties>
         <java.version>21</java.version>
@@ -18,28 +16,26 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring-boot.version>3.3.0</spring-boot.version>
         <spring-cloud.version>2023.0.2</spring-cloud.version>
-        <snakeyaml.version>2.2</snakeyaml.version>
         <lombok.version>1.18.32</lombok.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <micrometer-tracing.version>1.1.5</micrometer-tracing.version>
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-gateway</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
     </dependencies>
 
@@ -59,6 +55,13 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>io.micrometer</groupId>
+                <artifactId>micrometer-tracing-bom</artifactId>
+                <version>${micrometer-tracing.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -69,7 +72,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <layout>JAR</layout>
-                    <mainClass>io.github.khietbt.SesameProfileService</mainClass>
+                    <mainClass>io.github.khietbt.SesameApiGatewayService</mainClass>
                 </configuration>
                 <executions>
                     <execution>

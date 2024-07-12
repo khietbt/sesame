@@ -4,33 +4,50 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>sesame-profile-service</artifactId>
-    <name>sesame-profile-service</name>
-    <groupId>khietbt.github.io</groupId>
+    <artifactId>sesame-discovery-service</artifactId>
+    <description>Spring cloud eureka server</description>
+    <name>sesame-discovery-service</name>
+    <groupId>io.github.khietbt</groupId>
     <version>1.0.0</version>
-    <description>Sesame profile service</description>
-
 
     <properties>
         <java.version>21</java.version>
+        <lombok.version>1.18.32</lombok.version>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <snakeyaml.version>2.2</snakeyaml.version>
         <spring-boot.version>3.3.0</spring-boot.version>
         <spring-cloud.version>2023.0.2</spring-cloud.version>
-        <snakeyaml.version>2.2</snakeyaml.version>
-        <lombok.version>1.18.32</lombok.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+            <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-tracing</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>${snakeyaml.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -40,6 +57,7 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
@@ -69,7 +87,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <layout>JAR</layout>
-                    <mainClass>io.github.khietbt.SesameProfileService</mainClass>
+                    <mainClass>io.github.khietbt.SesameDiscoveryService</mainClass>
                 </configuration>
                 <executions>
                     <execution>
