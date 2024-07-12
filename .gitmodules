@@ -6,23 +6,3 @@
 	branch = master
 	path = vendors/keycloak
 	url = git@github.com:khietbt/sesame-keycloak-service.git
-[submodule "sesame-services/sesame-config-service"]
-	path = sesame-services/sesame-config-service
-	url = git@github.com:khietbt/sesame-config-service.git
-	branch = master
-[submodule "sesame-services/sesame-discovery-service"]
-	path = sesame-services/sesame-discovery-service
-	url = git@github.com:khietbt/sesame-discovery-service.git
-	branch = master
-[submodule "sesame-services/sesame-api-gateway-service"]
-	path = sesame-services/sesame-api-gateway-service
-	url = git@github.com:khietbt/sesame-api-gateway-service.git
-	branch = master
-[submodule "sesame-services/sesame-profile-service"]
-	path = sesame-services/sesame-profile-service
-	url = git@github.com:khietbt/sesame-profile-service.git
-	branch = master
-[submodule "sesame-libraries/sesame-security-library"]
-	path = sesame-libraries/sesame-security-library
-	url = git@github.com:khietbt/sesame-security-library.git
-	branch = master
