@@ -1,3 +1,3 @@
 # sesame
 
-java, spring
+A sample of spring cloud application.

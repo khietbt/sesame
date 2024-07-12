@@ -12,7 +12,6 @@
 
     <modules>
         <module>sesame-services</module>
-        <module>sesame-libraries</module>
     </modules>
 
     <dependencies>
