@@ -1,0 +1,2 @@
+SERVER_PORT: 8001
+SPRING_CLOUD_SERVER_NATIVE_SEARCH_LOCATIONS: file:sesame-services/sesame-config-service/src/main/resources/configuration-files
