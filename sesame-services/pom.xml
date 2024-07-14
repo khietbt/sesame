@@ -16,6 +16,7 @@
     <description>Sesame services</description>
 
     <modules>
+        <module>sesame-admin-service</module>
         <module>sesame-api-gateway-service</module>
         <module>sesame-config-service</module>
         <module>sesame-discovery-service</module>
