@@ -1,18 +1,8 @@
-server:
-  port: ${SERVER_PORT}
-
 spring:
   threads:
     virtual:
       enabled: true
   application:
     name: sesame-profile-service
-
-eureka:
-  client:
-    register-with-eureka: true
-    fetch-registry: false
-    serviceUrl:
-      defaultZone: ${EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE}
-  instance:
-    hostname: ${EUREKA_INSTANCE_HOSTNAME}
+  config:
+    import: ${SPRING_CONFIG_IMPORT}

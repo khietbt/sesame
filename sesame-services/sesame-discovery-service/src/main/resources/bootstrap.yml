@@ -3,5 +3,3 @@ spring:
     name: sesame-discovery-service
   config:
     import: ${SPRING_CONFIG_IMPORT}
-server:
-  port: ${SERVER_PORT}
