@@ -1,0 +1,8 @@
+spring:
+  threads:
+    virtual:
+      enabled: true
+  application:
+    name: sesame-user-service
+  config:
+    import: ${SPRING_CONFIG_IMPORT}
