@@ -2,4 +2,4 @@ spring:
   application:
     name: sesame-discovery-service
   config:
-    import: ${SPRING_CONFIG_IMPORT}
+    import: ${SPRING_CONFIG_IMPORT:configserver:http://localhost:8001}

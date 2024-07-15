@@ -13,17 +13,5 @@ spring:
       discovery:
         locator:
           enabled: true
-
-eureka:
-  client:
-    register-with-eureka: true
-    fetch-registry: false
-    serviceUrl:
-      defaultZone: ${EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE}
-  instance:
-    hostname: ${EUREKA_INSTANCE_HOSTNAME}
-
-server:
-  port: ${SERVER_PORT}
-management.endpoint.gateway.enabled: true
-management.endpoints.web.exposure.include: '*'
+  config:
+    import: ${SPRING_CONFIG_IMPORT:configserver:http://localhost:8001}
