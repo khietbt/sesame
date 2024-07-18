@@ -6,3 +6,7 @@ spring:
     name: sesame-user-service
   config:
     import: ${SPRING_CONFIG_IMPORT:configserver:http://localhost:8001}
+  datasource:
+    url: jdbc:mysql://localhost:3306/users
+    username: root
+    password: root

@@ -1,0 +1,38 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2023-10-02_create_table_users_0001
+      author: khietbt
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: varchar(255)
+              - column:
+                  name: email
+                  type: varchar(255)
+              - column:
+                  name: phone
+                  type: varchar(255)
+              - column:
+                  name: created_by
+                  type: varchar(255)
+              - column:
+                  name: updated_by
+                  type: varchar(255)
+              - column:
+                  name: created_at
+                  type: datetime(6)
+              - column:
+                  name: updated_at
+                  type: datetime(6)
+              - column:
+                  name: version
+                  type: int

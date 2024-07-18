@@ -26,3 +26,8 @@ logging:
 spring:
   discovery:
     enabled: true
+  jpa:
+    properties:
+      hibernate:
+        type:
+          preferred_uuid_jdbc_type: CHAR
