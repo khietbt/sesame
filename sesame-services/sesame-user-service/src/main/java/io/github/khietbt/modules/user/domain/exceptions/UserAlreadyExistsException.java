@@ -1,10 +1,10 @@
 package io.github.khietbt.modules.user.domain.exceptions;
 
 import io.github.khietbt.modules.user.domain.valueobjects.UserName;
-import io.github.khietbt.shared.domain.exceptions.DomainException;
+import io.github.khietbt.shared.domain.exceptions.ConflictException;
 
-public class UserAlreadyExistsException extends DomainException {
+public class UserAlreadyExistsException extends ConflictException {
     public UserAlreadyExistsException(UserName name) {
-        super(String.format("User with name '%s' already exists", name));
+        super(String.format("User with name '%s' already exists", name.getValue()));
     }
 }

@@ -31,3 +31,5 @@ spring:
       hibernate:
         type:
           preferred_uuid_jdbc_type: CHAR
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss.SSS

@@ -18,7 +18,7 @@ public class DatabaseUserService implements UserService {
         return userRepository
                 .getOne(name).
                 orElseThrow(
-                        () -> new UserNotFoundException(String.format("User with name '%s' not found", name))
+                        () -> new UserNotFoundException(name)
                 );
     }
 }

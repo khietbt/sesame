@@ -2,11 +2,13 @@ package io.github.khietbt.shared.domain.valueobjects;
 
 
 import lombok.Getter;
+import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 @Getter
+@ToString
 public abstract class ValueObject<T> implements Serializable {
     private final T value;
 
