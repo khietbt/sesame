@@ -1,32 +1,39 @@
 package io.github.khietbt.modules.user.presentation.rest.controllers;
 
-import io.github.khietbt.modules.user.application.commands.UserCreateCommand;
-import io.github.khietbt.modules.user.application.usecases.UserCreateUseCase;
+import io.github.khietbt.modules.user.application.commands.UserUpdateCommand;
+import io.github.khietbt.modules.user.application.usecases.UserUpdateUseCase;
+import io.github.khietbt.modules.user.domain.valueobjects.UserId;
 import io.github.khietbt.modules.user.domain.valueobjects.UserName;
-import io.github.khietbt.modules.user.presentation.rest.requests.UserCreateRequest;
-import io.github.khietbt.modules.user.presentation.rest.responses.UserCreateResponse;
+import io.github.khietbt.modules.user.presentation.rest.requests.UserUpdateRequest;
+import io.github.khietbt.modules.user.presentation.rest.responses.UserUpdateResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.UUID;
+
 @Slf4j
 @RestController
-public class UserCreateController {
+public class UserUpdateController {
     @Autowired
-    private UserCreateUseCase useCase;
+    private UserUpdateUseCase useCase;
 
-    @PostMapping("/users")
-    public ResponseEntity<?> run(@RequestBody UserCreateRequest request) {
-        var u = useCase.execute(new UserCreateCommand(new UserName(request.getName())));
+    @PatchMapping("/users/{id}")
+    public ResponseEntity<?> run(@PathVariable("id") UUID id,
+                                 @RequestBody UserUpdateRequest request) {
+        var command = new UserUpdateCommand(new UserId(id), new UserName(request.getName()));
+
+        var u = useCase.execute(command);
 
         return ResponseEntity
-                .status(HttpStatus.CREATED)
+                .status(HttpStatus.OK)
                 .body(
-                        UserCreateResponse
+                        UserUpdateResponse
                                 .builder()
                                 .id(u.getId().getValue())
                                 .name(u.getName().getValue())

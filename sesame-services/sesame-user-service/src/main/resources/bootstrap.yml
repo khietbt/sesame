@@ -10,3 +10,6 @@ spring:
     url: jdbc:mysql://localhost:3306/users
     username: root
     password: root
+  jackson:
+    serialization:
+      write-date-keys-as-timestamps: true

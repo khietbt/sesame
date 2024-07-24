@@ -12,7 +12,7 @@ import java.util.UUID;
 @Builder
 @Data
 @NoArgsConstructor
-public class UserCreateResponse {
+public class UserUpdateResponse {
     private UUID id;
 
     private String name;

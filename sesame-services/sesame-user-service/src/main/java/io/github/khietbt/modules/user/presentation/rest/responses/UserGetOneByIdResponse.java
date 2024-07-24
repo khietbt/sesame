@@ -20,4 +20,6 @@ public class UserGetOneByIdResponse {
     private String createdBy;
 
     private String updatedBy;
+
+    private Integer version;
 }

@@ -5,13 +5,15 @@ import io.github.khietbt.modules.user.domain.entities.User;
 import io.github.khietbt.modules.user.domain.exceptions.UserNotFoundException;
 import io.github.khietbt.modules.user.domain.repositories.UserRepository;
 import io.github.khietbt.shared.application.UseCase;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UserGetOneByIdUseCase implements UseCase<UserGetOneByIdQuery, User> {
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    public UserGetOneByIdUseCase(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public User execute(UserGetOneByIdQuery userGetOneByIdQuery) {

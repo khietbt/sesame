@@ -35,6 +35,7 @@ public class UserGetOneByIdController {
                         .updatedAt(u.getUpdatedAt().getValue())
                         .createdBy(u.getCreatedBy().getValue())
                         .updatedBy(u.getUpdatedBy().getValue())
+                        .version(u.getVersion().getValue())
                         .build()
         );
     }

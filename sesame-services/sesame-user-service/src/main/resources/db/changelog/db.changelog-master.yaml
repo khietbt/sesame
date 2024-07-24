@@ -29,10 +29,10 @@ databaseChangeLog:
                   type: varchar(255)
               - column:
                   name: created_at
-                  type: datetime(6)
+                  type: datetime(9)
               - column:
                   name: updated_at
-                  type: datetime(6)
+                  type: datetime(9)
               - column:
                   name: version
                   type: int

@@ -23,4 +23,6 @@ public class User extends DomainEntity {
     private UserUpdatedAt updatedAt;
 
     private UserUpdatedBy updatedBy;
+
+    private UserVersion version;
 }

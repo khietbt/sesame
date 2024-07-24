@@ -14,4 +14,6 @@ public interface UserRepository {
     User create(User user);
 
     boolean exists(UserName name);
+
+    User update(User user);
 }
