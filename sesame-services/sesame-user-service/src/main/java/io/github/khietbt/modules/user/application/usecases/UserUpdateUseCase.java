@@ -6,6 +6,7 @@ import io.github.khietbt.modules.user.domain.exceptions.UserAlreadyExistsExcepti
 import io.github.khietbt.modules.user.domain.exceptions.UserNotFoundException;
 import io.github.khietbt.modules.user.domain.repositories.UserRepository;
 import io.github.khietbt.shared.application.UseCase;
+import org.axonframework.commandhandling.CommandHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +18,7 @@ public class UserUpdateUseCase implements UseCase<UserUpdateCommand, User> {
     private UserRepository userRepository;
 
     @Override
+    @CommandHandler
     public User execute(UserUpdateCommand command) {
         var updating = userRepository.getOne(command.getId()).orElseThrow(
                 () -> new UserNotFoundException(command.getId())

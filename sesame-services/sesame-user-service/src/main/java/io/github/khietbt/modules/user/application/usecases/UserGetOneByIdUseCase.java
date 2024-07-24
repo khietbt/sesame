@@ -5,6 +5,7 @@ import io.github.khietbt.modules.user.domain.entities.User;
 import io.github.khietbt.modules.user.domain.exceptions.UserNotFoundException;
 import io.github.khietbt.modules.user.domain.repositories.UserRepository;
 import io.github.khietbt.shared.application.UseCase;
+import org.axonframework.queryhandling.QueryHandler;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -16,6 +17,7 @@ public class UserGetOneByIdUseCase implements UseCase<UserGetOneByIdQuery, User>
     }
 
     @Override
+    @QueryHandler
     public User execute(UserGetOneByIdQuery userGetOneByIdQuery) {
         return userRepository.getOne(userGetOneByIdQuery.getId())
                 .orElseThrow(

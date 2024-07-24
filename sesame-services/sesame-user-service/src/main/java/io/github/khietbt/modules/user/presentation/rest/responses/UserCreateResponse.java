@@ -1,5 +1,6 @@
 package io.github.khietbt.modules.user.presentation.rest.responses;
 
+import io.github.khietbt.modules.user.domain.entities.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,4 +27,17 @@ public class UserCreateResponse {
     private String updatedBy;
 
     private Integer version;
+
+    public static UserCreateResponse fromDomain(User u) {
+        return UserCreateResponse
+                .builder()
+                .id(u.getId().getValue())
+                .name(u.getName().getValue())
+                .createdAt(u.getCreatedAt().getValue())
+                .updatedAt(u.getUpdatedAt().getValue())
+                .createdBy(u.getCreatedBy().getValue())
+                .updatedBy(u.getUpdatedBy().getValue())
+                .version(u.getVersion().getValue())
+                .build();
+    }
 }

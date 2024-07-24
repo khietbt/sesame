@@ -1,8 +1,8 @@
 package io.github.khietbt.shared.presentation.rest;
 
 import io.github.khietbt.shared.domain.exceptions.ConflictException;
-import io.github.khietbt.shared.domain.exceptions.DomainException;
 import io.github.khietbt.shared.domain.exceptions.NotFoundException;
+import org.axonframework.common.AxonException;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,13 +16,15 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 @ControllerAdvice
 public class ControllerConfiguration implements ResponseBodyAdvice<Object> {
-    @ExceptionHandler(DomainException.class)
-    public ResponseEntity<Object> handle(DomainException e) {
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<Object> handle(RuntimeException e) {
         var status = HttpStatus.INTERNAL_SERVER_ERROR;
 
-        if (e instanceof ConflictException) {
+        var throwable = this.getCause(e);
+
+        if (throwable instanceof ConflictException) {
             status = HttpStatus.CONFLICT;
-        } else if (e instanceof NotFoundException) {
+        } else if (throwable instanceof NotFoundException) {
             status = HttpStatus.NOT_FOUND;
         }
 
@@ -33,6 +35,14 @@ public class ControllerConfiguration implements ResponseBodyAdvice<Object> {
                         .data(e.getMessage())
                         .build()
         );
+    }
+
+    private Throwable getCause(RuntimeException e) {
+        if (e instanceof AxonException) {
+            return e.getCause();
+        }
+
+        return e;
     }
 
     @Override

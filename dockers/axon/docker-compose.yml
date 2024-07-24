@@ -1,10 +1,16 @@
 services:
-  axon-server:
-    # docker run -d --name my-axon-server -p 8024:8024 -p 8124:8124 axoniq/axonserver
-    image: axoniq/axonserver:latest
-    container_name: distributed-example-axon-server
-    healthcheck:
-      test: curl -f http://localhost:8024/actuator/health || exit 1;
+  axonserver-1:
+    image: axoniq/axonserver:latest-jdk-17
+    #    pull_policy: always
+    hostname: axonserver-1
+    environment:
+      - axoniq_console_authentication=aae02b2b-1-asc:07bd88dbc3694eeba94749938cc3e01a
     ports:
-      - 8024:8024
-      - 8124:8124
+      - '8024:8024'
+      - '8124:8124'
+      - '8224:8224'
+    networks:
+      - axon-server
+
+networks:
+  axon-server:

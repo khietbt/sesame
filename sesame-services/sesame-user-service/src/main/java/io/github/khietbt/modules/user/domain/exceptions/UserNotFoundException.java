@@ -6,7 +6,7 @@ import io.github.khietbt.shared.domain.exceptions.NotFoundException;
 
 public class UserNotFoundException extends NotFoundException {
     public UserNotFoundException(UserId id) {
-        super(String.format("User with name '%s' not found", id.getValue()));
+        super(String.format("User with id '%s' not found", id.getValue()));
     }
 
     public UserNotFoundException(UserName name) {
