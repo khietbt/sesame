@@ -44,4 +44,6 @@ public abstract class JpaEntity extends DomainEntity {
 
     @Version
     private Integer version;
+
+    public abstract DomainEntity toDomain();
 }

@@ -10,13 +10,10 @@ spring:
     url: jdbc:mysql://localhost:3306/users
     username: root
     password: root
-  jackson:
-    serialization:
-      write-date-keys-as-timestamps: true
 axoniq:
-  console:
-    application-name: ${spring.application.name}
-    credentials: aae02b2b-1:311c3acb391d4ac998698897d0ab17e9
-    dlq-mode: NONE
+  #  console:
+  #    application-name: ${spring.application.name}
+  #    credentials: aae02b2b-1:311c3acb391d4ac998698897d0ab17e9
+  #    dlq-mode: NONE
   axonserver:
     servers: ${AXON_SERVER_HOST:localhost}:${AXON_SERVER_PORT:8124}

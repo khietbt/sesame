@@ -1,12 +1,14 @@
 package io.github.khietbt.shared.domain.entities;
 
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 
 @SuperBuilder
 @NoArgsConstructor
+@ToString
 public abstract class DomainEntity implements Serializable {
     @Override
     public boolean equals(Object o) {

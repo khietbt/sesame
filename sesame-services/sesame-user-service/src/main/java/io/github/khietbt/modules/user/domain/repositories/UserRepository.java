@@ -11,6 +11,10 @@ public interface UserRepository {
 
     Optional<User> getOne(UserName name);
 
+    User create(String name);
+
+    User create(UserName name);
+
     User create(User user);
 
     boolean exists(UserName name);

@@ -66,11 +66,11 @@
             <artifactId>axon-spring-boot-starter</artifactId>
             <version>4.9.3</version>
         </dependency>
-        <dependency>
-            <groupId>io.axoniq.console</groupId>
-            <artifactId>console-framework-client-spring-boot-starter</artifactId>
-            <version>1.6.0</version>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>io.axoniq.console</groupId>-->
+        <!--            <artifactId>console-framework-client-spring-boot-starter</artifactId>-->
+        <!--            <version>1.6.0</version>-->
+        <!--        </dependency>-->
         <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
         <dependency>
             <groupId>com.google.guava</groupId>

@@ -12,4 +12,8 @@ public class UserNotFoundException extends NotFoundException {
     public UserNotFoundException(UserName name) {
         super(String.format("User with name '%s' not found", name.getValue()));
     }
+
+    public UserNotFoundException(String message) {
+        super(message);
+    }
 }

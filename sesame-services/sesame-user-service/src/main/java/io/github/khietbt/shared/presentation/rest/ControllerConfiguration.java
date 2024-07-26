@@ -1,8 +1,9 @@
 package io.github.khietbt.shared.presentation.rest;
 
 import io.github.khietbt.shared.domain.exceptions.ConflictException;
+import io.github.khietbt.shared.domain.exceptions.ExceptionDetails;
 import io.github.khietbt.shared.domain.exceptions.NotFoundException;
-import org.axonframework.common.AxonException;
+import org.axonframework.commandhandling.CommandExecutionException;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -13,6 +14,8 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
+
+import java.lang.reflect.Constructor;
 
 @ControllerAdvice
 public class ControllerConfiguration implements ResponseBodyAdvice<Object> {
@@ -32,14 +35,30 @@ public class ControllerConfiguration implements ResponseBodyAdvice<Object> {
                 WrapperResponse
                         .builder()
                         .status("error")
-                        .data(e.getMessage())
+                        .data(throwable.getMessage())
                         .build()
         );
     }
 
     private Throwable getCause(RuntimeException e) {
-        if (e instanceof AxonException) {
-            return e.getCause();
+        if (e instanceof CommandExecutionException ex) {
+            return ex.<ExceptionDetails>getDetails()
+                    .map(
+                            details -> {
+                                try {
+                                    String className = details.getName();
+                                    String message = details.getMessage();
+
+                                    Class<?> clazz = Class.forName(className);
+                                    Constructor<?> constructor = clazz.getConstructor(String.class);
+
+                                    return (Throwable) constructor.newInstance(message);
+                                } catch (Exception ignored) {
+                                    return e;
+                                }
+                            }
+                    )
+                    .orElseGet(() -> e);
         }
 
         return e;

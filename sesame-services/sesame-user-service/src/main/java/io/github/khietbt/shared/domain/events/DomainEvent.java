@@ -2,23 +2,23 @@ package io.github.khietbt.shared.domain.events;
 
 import io.github.khietbt.shared.domain.entities.DomainEntity;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.time.Instant;
 import java.util.UUID;
 
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 @SuperBuilder
+@ToString
 public abstract class DomainEvent<T extends DomainEntity> {
-    private final T original;
+    private UUID aggregateId;
 
-    private final Instant timestamp;
+    private T source;
 
-    private final UUID id;
-
-    private final long version;
-
-    private final UUID aggregateId;
+    private Instant createdAt;
 }

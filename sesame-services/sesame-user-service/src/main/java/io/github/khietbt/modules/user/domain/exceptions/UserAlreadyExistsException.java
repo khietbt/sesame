@@ -7,4 +7,8 @@ public class UserAlreadyExistsException extends ConflictException {
     public UserAlreadyExistsException(UserName name) {
         super(String.format("User with name '%s' already exists", name.getValue()));
     }
+
+    public UserAlreadyExistsException(String message) {
+        super(message);
+    }
 }
