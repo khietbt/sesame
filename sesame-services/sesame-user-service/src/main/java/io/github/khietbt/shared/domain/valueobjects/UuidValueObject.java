@@ -9,4 +9,12 @@ public abstract class UuidValueObject extends ValueObject<UUID> {
     protected UuidValueObject(UUID value) {
         super(value);
     }
+
+    protected UuidValueObject() {
+        super(UUID.randomUUID());
+    }
+
+    protected UuidValueObject(String value) {
+        super(UUID.fromString(value));
+    }
 }

@@ -4,6 +4,9 @@ import io.github.khietbt.modules.user.application.commands.UserCreateCommand;
 import io.github.khietbt.modules.user.domain.events.UserCreatedEvent;
 import io.github.khietbt.modules.user.domain.exceptions.UserAlreadyExistsException;
 import io.github.khietbt.modules.user.domain.repositories.UserRepository;
+import io.github.khietbt.modules.user.domain.valueobjects.UserName;
+import io.github.khietbt.shared.domain.valueobjects.AggregateId;
+import io.github.khietbt.shared.domain.valueobjects.InstantValueObject;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.axonframework.commandhandling.CommandHandler;
@@ -13,16 +16,17 @@ import org.axonframework.modelling.command.AggregateLifecycle;
 import org.axonframework.spring.stereotype.Aggregate;
 
 import java.time.Instant;
-import java.util.UUID;
 
 @Aggregate
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class UserAggregate {
+public class UserCreateAggregate {
     @AggregateIdentifier
-    private UUID id;
+    private AggregateId id;
+
+    private UserName name;
 
     @CommandHandler
-    public UserAggregate(
+    public UserCreateAggregate(
             UserCreateCommand command,
             final UserRepository userRepository
     ) {
@@ -32,14 +36,12 @@ public class UserAggregate {
             throw new UserAlreadyExistsException(command.getName());
         }
 
-        var user = userRepository.create(name);
-
         AggregateLifecycle.apply(
                 UserCreatedEvent
                         .builder()
-                        .aggregateId(user.getId().getValue())
-                        .source(user)
-                        .createdAt(Instant.now())
+                        .aggregateId(command.getAggregateId())
+                        .name(name)
+                        .createdAt(new InstantValueObject(Instant.now()))
                         .build()
         );
     }
@@ -47,5 +49,6 @@ public class UserAggregate {
     @EventSourcingHandler
     public void publish(UserCreatedEvent event) {
         this.id = event.getAggregateId();
+        this.name = event.getName();
     }
 }

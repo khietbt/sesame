@@ -45,7 +45,13 @@ public interface JpaUserRepository extends JpaRepository<JpaUser, UUID>, UserRep
 
     @Override
     default User create(User user) {
-        return this.create(user.getName());
+        return this.save(
+                JpaUser
+                        .builder()
+                        .id(user.getId().getValue())
+                        .name(user.getName().getValue())
+                        .build()
+        ).toDomain();
     }
 
     @Override
