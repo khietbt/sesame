@@ -50,6 +50,7 @@ public interface JpaUserRepository extends JpaRepository<JpaUser, UUID>, UserRep
                         .builder()
                         .id(user.getId().getValue())
                         .name(user.getName().getValue())
+                        .version(user.getVersion().getValue())
                         .build()
         ).toDomain();
     }

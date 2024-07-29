@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 2023-10-02_create_table_users_0001
+      id: 2023-10-02_create_table_users
       author: khietbt
       changes:
         - createTable:
@@ -37,3 +37,14 @@ databaseChangeLog:
                   name: version
                   type: int
                   defaultValue: '1'
+  - changeSet:
+      id: 2023-10-02_create_index_idx_users_001
+      author: khietbt
+      changes:
+        - createIndex:
+            tableName: users
+            unique: true
+            indexName: idx_users_001
+            columns:
+              - column:
+                  name: name
