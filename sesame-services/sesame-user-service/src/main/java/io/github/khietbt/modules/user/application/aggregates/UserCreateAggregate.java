@@ -2,11 +2,8 @@ package io.github.khietbt.modules.user.application.aggregates;
 
 import io.github.khietbt.modules.user.application.commands.UserCreateCommand;
 import io.github.khietbt.modules.user.domain.events.UserCreatedEvent;
-import io.github.khietbt.modules.user.domain.exceptions.UserAlreadyExistsException;
-import io.github.khietbt.modules.user.domain.repositories.UserRepository;
 import io.github.khietbt.modules.user.domain.valueobjects.UserName;
 import io.github.khietbt.shared.domain.valueobjects.AggregateId;
-import io.github.khietbt.shared.domain.valueobjects.InstantValueObject;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.axonframework.commandhandling.CommandHandler;
@@ -25,21 +22,13 @@ public class UserCreateAggregate {
 
     @CommandHandler
     public UserCreateAggregate(
-            UserCreateCommand command,
-            final UserRepository userRepository
+            UserCreateCommand command
     ) {
-        var name = command.getName();
-
-        if (userRepository.exists(name)) {
-            throw new UserAlreadyExistsException(command.getName());
-        }
-
         AggregateLifecycle.apply(
                 UserCreatedEvent
                         .builder()
                         .aggregateId(command.getAggregateId())
-                        .name(name)
-                        .createdAt(InstantValueObject.now())
+                        .name(command.getName())
                         .build()
         );
     }

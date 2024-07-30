@@ -7,6 +7,7 @@ import io.github.khietbt.modules.user.domain.valueobjects.UserId;
 import io.github.khietbt.modules.user.domain.valueobjects.UserVersion;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.eventhandling.EventHandler;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +16,8 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class UserCreatedEventHandler {
     private final UserRepository userRepository;
+
+    private final CommandGateway commandGateway;
 
     @EventHandler
     void on(UserCreatedEvent event) {

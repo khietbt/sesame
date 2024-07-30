@@ -5,6 +5,6 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
-@ToString
+@ToString(callSuper = true)
 public abstract class UserEvent extends DomainEvent {
 }

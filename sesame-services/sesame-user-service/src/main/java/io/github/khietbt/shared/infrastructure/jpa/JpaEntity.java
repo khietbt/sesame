@@ -23,7 +23,6 @@ import java.util.UUID;
 @EntityListeners(AuditingEntityListener.class)
 public abstract class JpaEntity extends DomainEntity {
     @Id
-    @GeneratedValue
     private UUID id;
 
     @CreatedBy

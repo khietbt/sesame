@@ -1,11 +1,12 @@
 package io.github.khietbt.modules.user.presentation.rest.controllers;
 
-import io.github.khietbt.modules.user.application.commands.UserCreateCommand;
+import io.github.khietbt.modules.user.application.commands.UserNameValidateCommand;
 import io.github.khietbt.modules.user.domain.valueobjects.UserName;
 import io.github.khietbt.modules.user.presentation.rest.requests.UserCreateRequest;
 import io.github.khietbt.shared.domain.valueobjects.AggregateId;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.queryhandling.QueryGateway;
@@ -24,10 +25,17 @@ public class UserCreateController {
     private final QueryGateway queryGateway;
 
     @PostMapping("/users")
+    @SneakyThrows
     public CompletableFuture<?> create(@Valid @RequestBody UserCreateRequest request) {
         var name = new UserName(request.getName());
         var aggregateId = new AggregateId();
 
-        return commandGateway.send(new UserCreateCommand(aggregateId, name));
+        return commandGateway.send(
+                UserNameValidateCommand
+                        .builder()
+                        .aggregateId(aggregateId)
+                        .name(name)
+                        .build()
+        );
     }
 }
