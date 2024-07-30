@@ -15,8 +15,6 @@ import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.modelling.command.AggregateLifecycle;
 import org.axonframework.spring.stereotype.Aggregate;
 
-import java.time.Instant;
-
 @Aggregate
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserCreateAggregate {
@@ -41,7 +39,7 @@ public class UserCreateAggregate {
                         .builder()
                         .aggregateId(command.getAggregateId())
                         .name(name)
-                        .createdAt(new InstantValueObject(Instant.now()))
+                        .createdAt(InstantValueObject.now())
                         .build()
         );
     }

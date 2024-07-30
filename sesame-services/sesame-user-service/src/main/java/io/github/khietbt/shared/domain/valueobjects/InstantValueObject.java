@@ -9,4 +9,8 @@ public class InstantValueObject extends ValueObject<Instant> {
     public InstantValueObject(Instant value) {
         super(value);
     }
+
+    public static InstantValueObject now() {
+        return new InstantValueObject(Instant.now());
+    }
 }
