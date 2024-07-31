@@ -17,7 +17,7 @@
 
     <artifactId>sesame-config-service</artifactId>
     <name>sesame-config-service</name>
-    <groupId>khietbt.github.io</groupId>
+    <groupId>io.github.khietbt</groupId>
     <version>1.0.0</version>
     <description>Spring Cloud Config Server</description>
 

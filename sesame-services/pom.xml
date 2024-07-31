@@ -22,5 +22,6 @@
         <module>sesame-discovery-service</module>
         <module>sesame-profile-service</module>
         <module>sesame-user-service</module>
+        <module>sesame-service-shared</module>
     </modules>
 </project>

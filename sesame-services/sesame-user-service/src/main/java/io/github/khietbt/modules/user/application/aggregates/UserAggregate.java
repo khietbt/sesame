@@ -1,32 +1,32 @@
 package io.github.khietbt.modules.user.application.aggregates;
 
-import io.github.khietbt.modules.user.application.commands.UserNameValidateCommand;
-import io.github.khietbt.modules.user.domain.events.UserNameValidatedEvent;
+import io.github.khietbt.modules.user.application.commands.UserCreateCommand;
+import io.github.khietbt.modules.user.domain.events.UserCreatedEvent;
 import io.github.khietbt.modules.user.domain.exceptions.UserAlreadyExistsException;
 import io.github.khietbt.modules.user.domain.repositories.UserRepository;
 import io.github.khietbt.modules.user.domain.valueobjects.UserName;
 import io.github.khietbt.shared.domain.valueobjects.AggregateId;
+import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
-import org.axonframework.modelling.command.AggregateCreationPolicy;
 import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.modelling.command.AggregateLifecycle;
-import org.axonframework.modelling.command.CreationPolicy;
 import org.axonframework.spring.stereotype.Aggregate;
 
 @Aggregate
-@NoArgsConstructor
-public class UserNameValidateAggregate {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Slf4j
+public class UserAggregate {
     @AggregateIdentifier
-    private UserName name;
-
     private AggregateId id;
 
+    private UserName name;
+
     @CommandHandler
-    @CreationPolicy(AggregateCreationPolicy.CREATE_IF_MISSING)
-    public void handle(
-            UserNameValidateCommand command,
+    public UserAggregate(
+            UserCreateCommand command,
             UserRepository userRepository
     ) {
         if (userRepository.exists(command.getName())) {
@@ -34,16 +34,16 @@ public class UserNameValidateAggregate {
         }
 
         AggregateLifecycle.apply(
-                UserNameValidatedEvent
+                UserCreatedEvent
                         .builder()
+                        .aggregateId(id)
                         .name(command.getName())
-                        .aggregateId(command.getAggregateId())
                         .build()
         );
     }
 
     @EventSourcingHandler
-    public void on(UserNameValidatedEvent event) {
+    public void on(UserCreatedEvent event) {
         this.name = event.getName();
         this.id = event.getAggregateId();
     }

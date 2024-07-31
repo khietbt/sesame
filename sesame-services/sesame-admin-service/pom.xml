@@ -6,7 +6,7 @@
 
     <artifactId>sesame-admin-service</artifactId>
     <name>sesame-admin-service</name>
-    <groupId>khietbt.github.io</groupId>
+    <groupId>io.github.khietbt</groupId>
     <version>1.0.0</version>
     <description>Sesame admin service</description>
 

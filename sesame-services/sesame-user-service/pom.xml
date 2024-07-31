@@ -70,16 +70,20 @@
             <artifactId>axon-spring-boot-starter</artifactId>
             <version>4.9.3</version>
         </dependency>
-        <!--        <dependency>-->
-        <!--            <groupId>io.axoniq.console</groupId>-->
-        <!--            <artifactId>console-framework-client-spring-boot-starter</artifactId>-->
-        <!--            <version>1.6.0</version>-->
-        <!--        </dependency>-->
-        <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+        <dependency>
+            <groupId>io.axoniq.console</groupId>
+            <artifactId>console-framework-client-spring-boot-starter</artifactId>
+            <version>1.6.0</version>
+        </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>33.2.1-jre</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.khietbt</groupId>
+            <artifactId>sesame-service-shared</artifactId>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
 
