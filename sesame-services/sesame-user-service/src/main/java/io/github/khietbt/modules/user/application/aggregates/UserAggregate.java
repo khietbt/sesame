@@ -36,7 +36,7 @@ public class UserAggregate {
         AggregateLifecycle.apply(
                 UserCreatedEvent
                         .builder()
-                        .aggregateId(id)
+                        .aggregateId(command.getAggregateId())
                         .name(command.getName())
                         .build()
         );
