@@ -2,6 +2,7 @@ package io.github.khietbt.modules.user.application.aggregates;
 
 import io.github.khietbt.modules.user.application.commands.UserCreateCommand;
 import io.github.khietbt.modules.user.domain.events.UserCreatedEvent;
+import io.github.khietbt.modules.user.domain.events.UserNameClaimRequestedEvent;
 import io.github.khietbt.modules.user.domain.exceptions.UserAlreadyExistsException;
 import io.github.khietbt.modules.user.domain.repositories.UserRepository;
 import io.github.khietbt.modules.user.domain.valueobjects.UserName;
@@ -20,7 +21,7 @@ import org.axonframework.spring.stereotype.Aggregate;
 @Slf4j
 public class UserAggregate {
     @AggregateIdentifier
-    private AggregateId id;
+    private AggregateId aggregateId;
 
     private UserName name;
 
@@ -40,11 +41,19 @@ public class UserAggregate {
                         .name(command.getName())
                         .build()
         );
+
+        AggregateLifecycle.apply(
+                UserNameClaimRequestedEvent
+                        .builder()
+                        .aggregateId(command.getAggregateId())
+                        .name(command.getName())
+                        .build()
+        );
     }
 
     @EventSourcingHandler
     public void on(UserCreatedEvent event) {
         this.name = event.getName();
-        this.id = event.getAggregateId();
+        this.aggregateId = event.getAggregateId();
     }
 }

@@ -1,6 +1,6 @@
 package io.github.khietbt.modules.user.application.handlers;
 
-import io.github.khietbt.modules.user.domain.events.UserCreatedEvent;
+import io.github.khietbt.modules.user.domain.events.UserNameClaimDeletedEvent;
 import io.github.khietbt.modules.user.domain.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,11 +10,11 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 @Component
 @Slf4j
-public class UserCreatedEventHandler {
+public class UserNameClaimDeletedEventHandler {
     private final UserRepository userRepository;
 
     @EventHandler
-    public void on(UserCreatedEvent event) {
+    public void on(UserNameClaimDeletedEvent event) {
         log.error("Consumed by handler {}", event);
 //        this.userRepository.create(
 //                User
