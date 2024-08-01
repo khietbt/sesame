@@ -55,6 +55,7 @@ public class UserNameAggregate {
     }
 
     @CommandHandler
+    @CreationPolicy(AggregateCreationPolicy.CREATE_IF_MISSING)
     public void handle(UserNameClaimDeleteCommand command) {
         AggregateLifecycle.apply(
                 UserNameClaimDeletedEvent
@@ -74,6 +75,7 @@ public class UserNameAggregate {
     @EventSourcingHandler
     public void on(UserNameClaimDeletedEvent event) {
         this.userId = null;
+        this.userName = event.getUserName();
     }
 
     @EventSourcingHandler
