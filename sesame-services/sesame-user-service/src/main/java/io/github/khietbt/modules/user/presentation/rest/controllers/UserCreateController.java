@@ -1,9 +1,9 @@
 package io.github.khietbt.modules.user.presentation.rest.controllers;
 
-import io.github.khietbt.modules.user.application.commands.UserCreateCommand;
+import io.github.khietbt.modules.user.application.commands.UserCreateRequestCommand;
+import io.github.khietbt.modules.user.domain.valueobjects.UserId;
 import io.github.khietbt.modules.user.domain.valueobjects.UserName;
 import io.github.khietbt.modules.user.presentation.rest.requests.UserCreateRequest;
-import io.github.khietbt.shared.domain.valueobjects.AggregateId;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 @Slf4j
@@ -25,13 +26,13 @@ public class UserCreateController {
     @SneakyThrows
     public CompletableFuture<?> create(@Valid @RequestBody UserCreateRequest request) {
         var name = new UserName(request.getName());
-        var aggregateId = new AggregateId();
+        var userId = new UserId(UUID.randomUUID());
 
         return commandGateway.send(
-                UserCreateCommand
+                UserCreateRequestCommand
                         .builder()
-                        .aggregateId(aggregateId)
-                        .name(name)
+                        .userId(userId)
+                        .userName(name)
                         .build()
         );
     }

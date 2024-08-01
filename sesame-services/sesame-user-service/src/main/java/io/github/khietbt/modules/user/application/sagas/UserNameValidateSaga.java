@@ -1,10 +1,11 @@
 package io.github.khietbt.modules.user.application.sagas;
 
+import io.github.khietbt.modules.user.application.commands.UserCreateCompleteCommand;
 import io.github.khietbt.modules.user.application.commands.UserNameClaimCreateCommand;
-import io.github.khietbt.modules.user.domain.events.UserNameClaimCreatedEvent;
+import io.github.khietbt.modules.user.domain.events.UserNameClaimApprovedEvent;
 import io.github.khietbt.modules.user.domain.events.UserNameClaimRequestedEvent;
+import io.github.khietbt.modules.user.domain.valueobjects.UserId;
 import io.github.khietbt.modules.user.domain.valueobjects.UserName;
-import io.github.khietbt.shared.domain.valueobjects.AggregateId;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.modelling.saga.EndSaga;
@@ -15,33 +16,42 @@ import org.axonframework.spring.stereotype.Saga;
 @Saga
 @Slf4j
 public class UserNameValidateSaga {
-    private AggregateId aggregateId;
-    private UserName name;
+    private UserId userId;
 
-    @SagaEventHandler(associationProperty = "aggregateId", keyName = "name")
+    private UserName userName;
+
+    @SagaEventHandler(associationProperty = "userId", keyName = "userName")
     @StartSaga
     public void on(
             UserNameClaimRequestedEvent event,
             CommandGateway commandGateway
     ) {
-        this.aggregateId = event.getAggregateId();
-        this.name = event.getName();
+        this.userId = event.getUserId();
+        this.userName = event.getUserName();
 
         commandGateway.send(
                 UserNameClaimCreateCommand
                         .builder()
-                        .aggregateId(event.getAggregateId())
-                        .name(event.getName())
+                        .userId(event.getUserId())
+                        .userName(event.getUserName())
                         .build()
         );
     }
 
-    @SagaEventHandler(associationProperty = "name", keyName = "name")
+    @SagaEventHandler(associationProperty = "userId", keyName = "userName")
     @EndSaga
     public void on(
-            UserNameClaimCreatedEvent event,
+            UserNameClaimApprovedEvent event,
             CommandGateway commandGateway
     ) {
-        log.info("Claimed an user name: {}", event.getName());
+        log.info("Claimed an user name: {}", event.getUserName());
+
+        commandGateway.send(
+                UserCreateCompleteCommand
+                        .builder()
+                        .userId(event.getUserId())
+                        .userName(event.getUserName())
+                        .build()
+        );
     }
 }

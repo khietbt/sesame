@@ -1,12 +1,13 @@
 package io.github.khietbt.modules.user.application.aggregates;
 
-import io.github.khietbt.modules.user.application.commands.UserCreateCommand;
+import io.github.khietbt.modules.user.application.commands.UserCreateCompleteCommand;
+import io.github.khietbt.modules.user.application.commands.UserCreateRequestCommand;
 import io.github.khietbt.modules.user.domain.events.UserCreatedEvent;
 import io.github.khietbt.modules.user.domain.events.UserNameClaimRequestedEvent;
 import io.github.khietbt.modules.user.domain.exceptions.UserAlreadyExistsException;
 import io.github.khietbt.modules.user.domain.repositories.UserRepository;
+import io.github.khietbt.modules.user.domain.valueobjects.UserId;
 import io.github.khietbt.modules.user.domain.valueobjects.UserName;
-import io.github.khietbt.shared.domain.valueobjects.AggregateId;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,39 +22,50 @@ import org.axonframework.spring.stereotype.Aggregate;
 @Slf4j
 public class UserAggregate {
     @AggregateIdentifier
-    private AggregateId aggregateId;
+    private UserId userId;
 
-    private UserName name;
+    private UserName userName;
 
     @CommandHandler
     public UserAggregate(
-            UserCreateCommand command,
+            UserCreateRequestCommand command,
             UserRepository userRepository
     ) {
-        if (userRepository.exists(command.getName())) {
-            throw new UserAlreadyExistsException(command.getName());
+        /* There is a user in database using the incoming user's name. */
+        if (userRepository.exists(command.getUserName())) {
+            throw new UserAlreadyExistsException(command.getUserName());
         }
 
-        AggregateLifecycle.apply(
-                UserCreatedEvent
-                        .builder()
-                        .aggregateId(command.getAggregateId())
-                        .name(command.getName())
-                        .build()
-        );
-
+        /* Claim this user's name. */
         AggregateLifecycle.apply(
                 UserNameClaimRequestedEvent
                         .builder()
-                        .aggregateId(command.getAggregateId())
-                        .name(command.getName())
+                        .userId(command.getUserId())
+                        .userName(command.getUserName())
+                        .build()
+        );
+    }
+
+    @EventSourcingHandler
+    public void on(UserNameClaimRequestedEvent event) {
+        this.userName = event.getUserName();
+        this.userId = event.getUserId();
+    }
+
+    @CommandHandler
+    public void on(UserCreateCompleteCommand command) {
+        AggregateLifecycle.apply(
+                UserCreatedEvent
+                        .builder()
+                        .userName(command.getUserName())
+                        .userId(command.getUserId())
                         .build()
         );
     }
 
     @EventSourcingHandler
     public void on(UserCreatedEvent event) {
-        this.name = event.getName();
-        this.aggregateId = event.getAggregateId();
+        this.userName = event.getUserName();
+        this.userId = event.getUserId();
     }
 }

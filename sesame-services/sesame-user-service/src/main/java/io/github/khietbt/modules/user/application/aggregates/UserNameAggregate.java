@@ -2,11 +2,11 @@ package io.github.khietbt.modules.user.application.aggregates;
 
 import io.github.khietbt.modules.user.application.commands.UserNameClaimCreateCommand;
 import io.github.khietbt.modules.user.application.commands.UserNameClaimDeleteCommand;
-import io.github.khietbt.modules.user.domain.events.UserNameClaimCreatedEvent;
+import io.github.khietbt.modules.user.domain.events.UserNameClaimApprovedEvent;
 import io.github.khietbt.modules.user.domain.events.UserNameClaimDeletedEvent;
 import io.github.khietbt.modules.user.domain.events.UserNameClaimRejectedEvent;
+import io.github.khietbt.modules.user.domain.valueobjects.UserId;
 import io.github.khietbt.modules.user.domain.valueobjects.UserName;
-import io.github.khietbt.shared.domain.valueobjects.AggregateId;
 import lombok.NoArgsConstructor;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
@@ -20,27 +20,25 @@ import org.axonframework.spring.stereotype.Aggregate;
 @NoArgsConstructor
 public class UserNameAggregate {
     @AggregateIdentifier
-    private UserName name;
+    private UserName userName;
 
-    private AggregateId aggregateId;
+    private UserId userId;
 
-    private boolean claimed = false;
-
-    public UserNameAggregate(UserName name, AggregateId aggregateId) {
-        this.name = name;
-        this.aggregateId = aggregateId;
+    public UserNameAggregate(UserName name, UserId userId) {
+        this.userName = name;
+        this.userId = userId;
     }
 
     @CommandHandler
     @CreationPolicy(AggregateCreationPolicy.CREATE_IF_MISSING)
     public void handle(UserNameClaimCreateCommand command) {
-        if (!this.claimed) {
-            // approved
+        /* This user's name is not owned by any user. */
+        if (this.userId == null) {
             AggregateLifecycle.apply(
-                    UserNameClaimCreatedEvent
+                    UserNameClaimApprovedEvent
                             .builder()
-                            .aggregateId(command.getAggregateId())
-                            .name(command.getName())
+                            .userId(command.getUserId())
+                            .userName(command.getUserName())
                             .build()
             );
 
@@ -50,8 +48,8 @@ public class UserNameAggregate {
         AggregateLifecycle.apply(
                 UserNameClaimRejectedEvent
                         .builder()
-                        .aggregateId(command.getAggregateId())
-                        .name(command.getName())
+                        .userId(command.getUserId())
+                        .userName(command.getUserName())
                         .build()
         );
     }
@@ -61,23 +59,21 @@ public class UserNameAggregate {
         AggregateLifecycle.apply(
                 UserNameClaimDeletedEvent
                         .builder()
-                        .aggregateId(command.getAggregateId())
-                        .name(command.getName())
+                        .userId(command.getUserId())
+                        .userName(command.getUserName())
                         .build()
         );
     }
 
     @EventSourcingHandler
-    public void on(UserNameClaimCreatedEvent event) {
-        this.aggregateId = event.getAggregateId();
-        this.name = event.getName();
-        this.claimed = true;
+    public void on(UserNameClaimApprovedEvent event) {
+        this.userId = event.getUserId();
+        this.userName = event.getUserName();
     }
 
     @EventSourcingHandler
     public void on(UserNameClaimDeletedEvent event) {
-        this.aggregateId = null;
-        this.claimed = false;
+        this.userId = null;
     }
 
     @EventSourcingHandler

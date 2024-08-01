@@ -11,9 +11,9 @@ import org.axonframework.modelling.command.TargetAggregateIdentifier;
 @Getter
 @SuperBuilder
 @ToString(callSuper = true)
-public class UserNameClaimDeleteCommand extends Command {
+public class UserCreateCompleteCommand extends Command {
+    @TargetAggregateIdentifier
     private final UserId userId;
 
-    @TargetAggregateIdentifier
     private final UserName userName;
 }

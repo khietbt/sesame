@@ -1,7 +1,9 @@
 package io.github.khietbt.modules.user.application.handlers;
 
+import io.github.khietbt.modules.user.domain.entities.User;
 import io.github.khietbt.modules.user.domain.events.UserCreatedEvent;
 import io.github.khietbt.modules.user.domain.repositories.UserRepository;
+import io.github.khietbt.modules.user.domain.valueobjects.UserVersion;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.eventhandling.EventHandler;
@@ -15,15 +17,14 @@ public class UserCreatedEventHandler {
 
     @EventHandler
     public void on(UserCreatedEvent event) {
-        log.error("Consumed by handler {}", event);
-//        this.userRepository.create(
-//                User
-//                        .builder()
-//                        .id(new UserId(event.getAggregateId().getValue()))
-//                        .name(event.getName())
-//                        .version(new UserVersion(1))
-//                        .build()
-//        );
+        this.userRepository.create(
+                User
+                        .builder()
+                        .id(event.getUserId())
+                        .name(event.getUserName())
+                        .version(new UserVersion(1))
+                        .build()
+        );
     }
 }
 

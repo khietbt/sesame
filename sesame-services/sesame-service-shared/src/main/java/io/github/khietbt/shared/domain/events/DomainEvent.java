@@ -1,6 +1,5 @@
 package io.github.khietbt.shared.domain.events;
 
-import io.github.khietbt.shared.domain.valueobjects.AggregateId;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,5 +12,4 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @ToString
 public abstract class DomainEvent {
-    private AggregateId aggregateId;
 }
