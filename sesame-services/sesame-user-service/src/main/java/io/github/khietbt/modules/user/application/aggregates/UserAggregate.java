@@ -13,8 +13,10 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
+import org.axonframework.modelling.command.AggregateCreationPolicy;
 import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.modelling.command.AggregateLifecycle;
+import org.axonframework.modelling.command.CreationPolicy;
 import org.axonframework.spring.stereotype.Aggregate;
 
 import java.util.Objects;
@@ -72,6 +74,7 @@ public class UserAggregate {
     }
 
     @CommandHandler
+    @CreationPolicy(AggregateCreationPolicy.CREATE_IF_MISSING)
     public void on(UserUpdateStartCommand command, UserRepository userRepository) {
         var existing = userRepository.getOne(command.getUserId())
                 .orElseThrow(() -> new UserNotFoundException(command.getUserId()));
