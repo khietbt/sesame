@@ -2,8 +2,12 @@ package io.github.khietbt.modules.user.application.aggregates;
 
 import io.github.khietbt.modules.user.application.commands.UserCreateCompleteCommand;
 import io.github.khietbt.modules.user.application.commands.UserCreateRequestCommand;
+import io.github.khietbt.modules.user.application.commands.UserUpdateCompleteCommand;
+import io.github.khietbt.modules.user.application.commands.UserUpdateStartCommand;
 import io.github.khietbt.modules.user.domain.events.UserCreatedEvent;
 import io.github.khietbt.modules.user.domain.events.UserNameClaimRequestedEvent;
+import io.github.khietbt.modules.user.domain.events.UserUpdateCompletedEvent;
+import io.github.khietbt.modules.user.domain.events.UserUpdateStartedEvent;
 import io.github.khietbt.modules.user.domain.exceptions.UserAlreadyExistsException;
 import io.github.khietbt.modules.user.domain.repositories.UserRepository;
 import io.github.khietbt.modules.user.domain.valueobjects.UserId;
@@ -68,4 +72,52 @@ public class UserAggregate {
         this.userName = event.getUserName();
         this.userId = event.getUserId();
     }
+
+    @CommandHandler
+    public void on(UserUpdateStartCommand command, UserRepository userRepository) {
+        userRepository.getOne(command.getUserName()).ifPresent(
+                (u) -> {
+                    if (u.getId() != command.getUserId()) {
+                        throw new UserAlreadyExistsException(command.getUserName());
+                    }
+                }
+        );
+
+        AggregateLifecycle.apply(
+                UserUpdateStartedEvent
+                        .builder()
+                        .userId(command.getUserId())
+                        .oldUserName(command.getOldUserName())
+                        .userName(command.getUserName())
+                        .build()
+        );
+    }
+
+    @EventSourcingHandler
+    public void on(UserUpdateStartedEvent event) {
+        this.userId = event.getUserId();
+    }
+
+    @CommandHandler
+    public void on(UserUpdateCompleteCommand command) {
+        AggregateLifecycle.apply(
+                UserUpdateCompletedEvent
+                        .builder()
+                        .userId(command.getUserId())
+                        .oldUserName(command.getOldUserName())
+                        .userName(command.getUserName())
+                        .build()
+        );
+    }
+
+    @EventSourcingHandler
+    public void on(UserUpdateCompletedEvent event) {
+        this.userId = event.getUserId();
+        this.userName = event.getUserName();
+    }
+
+//    @EventSourcingHandler
+//    public void on(UserUpdateStartedEvent event) {
+//        this.userId = event.getUserId();
+//    }
 }

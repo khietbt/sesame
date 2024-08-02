@@ -1,11 +1,14 @@
 package io.github.khietbt.modules.user.presentation.rest.controllers;
 
-import io.github.khietbt.modules.user.domain.entities.User;
+import io.github.khietbt.modules.user.application.commands.UserUpdateStartCommand;
+import io.github.khietbt.modules.user.domain.exceptions.UserNotFoundException;
+import io.github.khietbt.modules.user.domain.repositories.UserRepository;
+import io.github.khietbt.modules.user.domain.valueobjects.UserId;
+import io.github.khietbt.modules.user.domain.valueobjects.UserName;
 import io.github.khietbt.modules.user.presentation.rest.requests.UserUpdateRequest;
-import io.github.khietbt.modules.user.presentation.rest.responses.UserUpdateResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.gateway.CommandGateway;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,17 +19,32 @@ import java.util.concurrent.CompletableFuture;
 
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 public class UserUpdateController {
-    @Autowired
-    private CommandGateway commandGateway;
+    private final CommandGateway commandGateway;
+
+    private final UserRepository userRepository;
 
     @PatchMapping("/users/{id}")
     public CompletableFuture<?> update(
             @PathVariable("id") UUID id,
             @RequestBody UserUpdateRequest request
     ) {
-        return commandGateway
-                .<User>send(request.toCommand(id))
-                .thenApplyAsync(UserUpdateResponse::fromDomain);
+        var userId = new UserId(id);
+
+        return this.userRepository
+                .getOne(new UserId(id))
+                .map(
+                        (u) -> UserUpdateStartCommand
+                                .builder()
+                                .userId(userId)
+                                .oldUserName(u.getName())
+                                .userName(new UserName(request.getName()))
+                                .build()
+                )
+                .map(this.commandGateway::send)
+                .orElseThrow(
+                        () -> new UserNotFoundException(userId)
+                );
     }
 }

@@ -3,18 +3,16 @@ package io.github.khietbt.modules.user.application.commands;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.github.khietbt.modules.user.domain.valueobjects.UserId;
 import io.github.khietbt.modules.user.domain.valueobjects.UserName;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
-@AllArgsConstructor
 @Builder
 @Data
-@NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UserUpdateCommand {
-    private UserId id;
+public class UserUpdateUserNameUnclaimCommand {
+    private final UserId userId;
 
-    private UserName name;
+    @TargetAggregateIdentifier
+    private UserName userName;
 }

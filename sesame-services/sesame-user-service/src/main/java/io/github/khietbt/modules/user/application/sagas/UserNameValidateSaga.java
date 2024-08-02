@@ -1,9 +1,7 @@
 package io.github.khietbt.modules.user.application.sagas;
 
-import io.github.khietbt.modules.user.application.commands.UserCreateCompleteCommand;
-import io.github.khietbt.modules.user.application.commands.UserNameClaimCreateCommand;
-import io.github.khietbt.modules.user.domain.events.UserNameClaimApprovedEvent;
-import io.github.khietbt.modules.user.domain.events.UserNameClaimRequestedEvent;
+import io.github.khietbt.modules.user.application.commands.*;
+import io.github.khietbt.modules.user.domain.events.*;
 import io.github.khietbt.modules.user.domain.valueobjects.UserId;
 import io.github.khietbt.modules.user.domain.valueobjects.UserName;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +17,8 @@ public class UserNameValidateSaga {
     private UserId userId;
 
     private UserName userName;
+
+    private UserName oldUserName;
 
     @SagaEventHandler(associationProperty = "userId", keyName = "userName")
     @StartSaga
@@ -44,13 +44,63 @@ public class UserNameValidateSaga {
             UserNameClaimApprovedEvent event,
             CommandGateway commandGateway
     ) {
-        log.info("Claimed an user name: {}", event.getUserName());
-
         commandGateway.send(
                 UserCreateCompleteCommand
                         .builder()
                         .userId(event.getUserId())
                         .userName(event.getUserName())
+                        .build()
+        );
+    }
+
+    @SagaEventHandler(associationProperty = "userId", keyName = "userId")
+    @StartSaga
+    public void on(
+            UserUpdateStartedEvent event,
+            CommandGateway commandGateway
+    ) {
+        this.oldUserName = event.getOldUserName();
+        this.userId = event.getUserId();
+        this.userName = event.getUserName();
+
+        commandGateway.send(
+                UserUpdateUserNameClaimCommand
+                        .builder()
+                        .userId(event.getUserId())
+                        .userName(event.getUserName())
+                        .build()
+        );
+    }
+
+    @SagaEventHandler(associationProperty = "userId", keyName = "userId")
+    @EndSaga
+    public void on(
+            UserUpdateUserNameClaimRejectedEvent event,
+            CommandGateway commandGateway
+    ) {
+        //
+    }
+
+    @SagaEventHandler(associationProperty = "userId", keyName = "userId")
+    @EndSaga
+    public void on(
+            UserUpdateUserNameClaimApprovedEvent event,
+            CommandGateway commandGateway
+    ) {
+        commandGateway.send(
+                UserUpdateCompleteCommand
+                        .builder()
+                        .userId(this.userId)
+                        .oldUserName(this.oldUserName)
+                        .userName(this.userName)
+                        .build()
+        );
+
+        commandGateway.send(
+                UserUpdateUserNameUnclaimCommand
+                        .builder()
+                        .userId(this.userId)
+                        .userName(this.oldUserName)
                         .build()
         );
     }
