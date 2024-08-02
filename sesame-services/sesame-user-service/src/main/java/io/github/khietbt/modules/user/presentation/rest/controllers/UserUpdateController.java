@@ -1,7 +1,6 @@
 package io.github.khietbt.modules.user.presentation.rest.controllers;
 
 import io.github.khietbt.modules.user.application.commands.UserUpdateStartCommand;
-import io.github.khietbt.modules.user.domain.exceptions.UserNotFoundException;
 import io.github.khietbt.modules.user.domain.repositories.UserRepository;
 import io.github.khietbt.modules.user.domain.valueobjects.UserId;
 import io.github.khietbt.modules.user.domain.valueobjects.UserName;
@@ -31,20 +30,14 @@ public class UserUpdateController {
             @RequestBody UserUpdateRequest request
     ) {
         var userId = new UserId(id);
+        var userName = new UserName(request.getName());
 
-        return this.userRepository
-                .getOne(new UserId(id))
-                .map(
-                        (u) -> UserUpdateStartCommand
-                                .builder()
-                                .userId(userId)
-                                .oldUserName(u.getName())
-                                .userName(new UserName(request.getName()))
-                                .build()
-                )
-                .map(this.commandGateway::send)
-                .orElseThrow(
-                        () -> new UserNotFoundException(userId)
-                );
+        return commandGateway.send(
+                UserUpdateStartCommand
+                        .builder()
+                        .userId(userId)
+                        .userName(new UserName(request.getName()))
+                        .build()
+        );
     }
 }

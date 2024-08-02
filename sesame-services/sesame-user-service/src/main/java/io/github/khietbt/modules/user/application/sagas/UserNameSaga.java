@@ -13,7 +13,7 @@ import org.axonframework.spring.stereotype.Saga;
 
 @Saga
 @Slf4j
-public class UserNameValidateSaga {
+public class UserNameSaga {
     private UserId userId;
 
     private UserName userName;
@@ -23,14 +23,14 @@ public class UserNameValidateSaga {
     @SagaEventHandler(associationProperty = "userId", keyName = "userName")
     @StartSaga
     public void on(
-            UserNameClaimRequestedEvent event,
+            UserCreateStartedEvent event,
             CommandGateway commandGateway
     ) {
         this.userId = event.getUserId();
         this.userName = event.getUserName();
 
         commandGateway.send(
-                UserNameClaimCreateCommand
+                UserCreateUserNameClaimCommand
                         .builder()
                         .userId(event.getUserId())
                         .userName(event.getUserName())
@@ -41,11 +41,26 @@ public class UserNameValidateSaga {
     @SagaEventHandler(associationProperty = "userId", keyName = "userName")
     @EndSaga
     public void on(
-            UserNameClaimApprovedEvent event,
+            UserCreateUserNameClaimApprovedEvent event,
             CommandGateway commandGateway
     ) {
         commandGateway.send(
                 UserCreateCompleteCommand
+                        .builder()
+                        .userId(event.getUserId())
+                        .userName(event.getUserName())
+                        .build()
+        );
+    }
+
+    @SagaEventHandler(associationProperty = "userId", keyName = "userName")
+    @EndSaga
+    public void on(
+            UserCreateUserNameClaimRejectedEvent event,
+            CommandGateway commandGateway
+    ) {
+        commandGateway.send(
+                UserCreateRejectCommand
                         .builder()
                         .userId(event.getUserId())
                         .userName(event.getUserName())
@@ -78,7 +93,13 @@ public class UserNameValidateSaga {
             UserUpdateUserNameClaimRejectedEvent event,
             CommandGateway commandGateway
     ) {
-        //
+        commandGateway.send(
+                UserUpdateRejectCommand
+                        .builder()
+                        .userId(event.getUserId())
+                        .userName(event.getUserName())
+                        .build()
+        );
     }
 
     @SagaEventHandler(associationProperty = "userId", keyName = "userId")

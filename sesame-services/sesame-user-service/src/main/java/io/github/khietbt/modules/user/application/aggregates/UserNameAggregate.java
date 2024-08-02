@@ -1,6 +1,6 @@
 package io.github.khietbt.modules.user.application.aggregates;
 
-import io.github.khietbt.modules.user.application.commands.UserNameClaimCreateCommand;
+import io.github.khietbt.modules.user.application.commands.UserCreateUserNameClaimCommand;
 import io.github.khietbt.modules.user.application.commands.UserNameClaimDeleteCommand;
 import io.github.khietbt.modules.user.application.commands.UserUpdateUserNameClaimCommand;
 import io.github.khietbt.modules.user.application.commands.UserUpdateUserNameUnclaimCommand;
@@ -33,11 +33,11 @@ public class UserNameAggregate {
 
     @CommandHandler
     @CreationPolicy(AggregateCreationPolicy.CREATE_IF_MISSING)
-    public void handle(UserNameClaimCreateCommand command) {
+    public void handle(UserCreateUserNameClaimCommand command) {
         /* This user's name is not owned by any user. */
         if (this.userId == null) {
             AggregateLifecycle.apply(
-                    UserNameClaimApprovedEvent
+                    UserCreateUserNameClaimApprovedEvent
                             .builder()
                             .userId(command.getUserId())
                             .userName(command.getUserName())
@@ -48,7 +48,7 @@ public class UserNameAggregate {
         }
 
         AggregateLifecycle.apply(
-                UserNameClaimRejectedEvent
+                UserCreateUserNameClaimRejectedEvent
                         .builder()
                         .userId(command.getUserId())
                         .userName(command.getUserName())
@@ -69,7 +69,7 @@ public class UserNameAggregate {
     }
 
     @EventSourcingHandler
-    public void on(UserNameClaimApprovedEvent event) {
+    public void on(UserCreateUserNameClaimApprovedEvent event) {
         this.userId = event.getUserId();
         this.userName = event.getUserName();
     }
@@ -81,7 +81,7 @@ public class UserNameAggregate {
     }
 
     @EventSourcingHandler
-    public void on(UserNameClaimRejectedEvent event) {
+    public void on(UserCreateUserNameClaimRejectedEvent event) {
         //
     }
 

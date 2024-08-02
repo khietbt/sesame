@@ -1,7 +1,7 @@
 package io.github.khietbt.modules.user.application.handlers;
 
 import io.github.khietbt.modules.user.domain.entities.User;
-import io.github.khietbt.modules.user.domain.events.UserCreatedEvent;
+import io.github.khietbt.modules.user.domain.events.UserCreateCompletedEvent;
 import io.github.khietbt.modules.user.domain.repositories.UserRepository;
 import io.github.khietbt.modules.user.domain.valueobjects.UserVersion;
 import lombok.AllArgsConstructor;
@@ -12,11 +12,11 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 @Component
 @Slf4j
-public class UserCreatedEventHandler {
+public class UserCreateComletedEventHandler {
     private final UserRepository userRepository;
 
     @EventHandler
-    public void on(UserCreatedEvent event) {
+    public void on(UserCreateCompletedEvent event) {
         this.userRepository.create(
                 User
                         .builder()

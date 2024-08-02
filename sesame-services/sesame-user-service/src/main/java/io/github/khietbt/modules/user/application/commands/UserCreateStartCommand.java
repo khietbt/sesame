@@ -1,18 +1,19 @@
 package io.github.khietbt.modules.user.application.commands;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.github.khietbt.modules.user.domain.valueobjects.UserId;
 import io.github.khietbt.modules.user.domain.valueobjects.UserName;
-import lombok.Builder;
-import lombok.Data;
+import io.github.khietbt.shared.application.Command;
+import lombok.Getter;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
-@Builder
-@Data
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class UserUpdateStartCommand {
+@Getter
+@SuperBuilder
+@ToString(callSuper = true)
+public class UserCreateStartCommand extends Command {
     @TargetAggregateIdentifier
     private final UserId userId;
 
-    private UserName userName;
+    private final UserName userName;
 }

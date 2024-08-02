@@ -9,7 +9,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder
 @ToString(callSuper = true)
-public class UserNameClaimRequestedEvent extends UserEvent {
+public class UserCreateStartedEvent extends UserEvent {
     private UserId userId;
 
     private UserName userName;

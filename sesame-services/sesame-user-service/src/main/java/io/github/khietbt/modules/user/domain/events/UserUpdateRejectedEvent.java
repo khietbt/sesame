@@ -9,7 +9,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder
 @ToString(callSuper = true)
-public class UserNameClaimRejectedEvent extends UserEvent {
+public class UserUpdateRejectedEvent extends UserEvent {
     private UserId userId;
 
     private UserName userName;

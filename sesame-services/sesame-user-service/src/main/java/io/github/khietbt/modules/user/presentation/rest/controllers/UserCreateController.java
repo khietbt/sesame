@@ -1,6 +1,6 @@
 package io.github.khietbt.modules.user.presentation.rest.controllers;
 
-import io.github.khietbt.modules.user.application.commands.UserCreateRequestCommand;
+import io.github.khietbt.modules.user.application.commands.UserCreateStartCommand;
 import io.github.khietbt.modules.user.domain.valueobjects.UserId;
 import io.github.khietbt.modules.user.domain.valueobjects.UserName;
 import io.github.khietbt.modules.user.presentation.rest.requests.UserCreateRequest;
@@ -29,7 +29,7 @@ public class UserCreateController {
         var userId = new UserId(UUID.randomUUID());
 
         return commandGateway.send(
-                UserCreateRequestCommand
+                UserCreateStartCommand
                         .builder()
                         .userId(userId)
                         .userName(name)

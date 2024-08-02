@@ -11,7 +11,7 @@ import org.axonframework.modelling.command.TargetAggregateIdentifier;
 @Getter
 @SuperBuilder
 @ToString(callSuper = true)
-public class UserCreateRequestCommand extends Command {
+public class UserUpdateRejectCommand extends Command {
     @TargetAggregateIdentifier
     private final UserId userId;
 

@@ -1,14 +1,10 @@
 package io.github.khietbt.modules.user.application.aggregates;
 
-import io.github.khietbt.modules.user.application.commands.UserCreateCompleteCommand;
-import io.github.khietbt.modules.user.application.commands.UserCreateRequestCommand;
-import io.github.khietbt.modules.user.application.commands.UserUpdateCompleteCommand;
-import io.github.khietbt.modules.user.application.commands.UserUpdateStartCommand;
-import io.github.khietbt.modules.user.domain.events.UserCreatedEvent;
-import io.github.khietbt.modules.user.domain.events.UserNameClaimRequestedEvent;
-import io.github.khietbt.modules.user.domain.events.UserUpdateCompletedEvent;
-import io.github.khietbt.modules.user.domain.events.UserUpdateStartedEvent;
+import io.github.khietbt.modules.user.application.commands.*;
+import io.github.khietbt.modules.user.domain.events.*;
+import io.github.khietbt.modules.user.domain.exceptions.IdenticalUserNameException;
 import io.github.khietbt.modules.user.domain.exceptions.UserAlreadyExistsException;
+import io.github.khietbt.modules.user.domain.exceptions.UserNotFoundException;
 import io.github.khietbt.modules.user.domain.repositories.UserRepository;
 import io.github.khietbt.modules.user.domain.valueobjects.UserId;
 import io.github.khietbt.modules.user.domain.valueobjects.UserName;
@@ -21,6 +17,8 @@ import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.modelling.command.AggregateLifecycle;
 import org.axonframework.spring.stereotype.Aggregate;
 
+import java.util.Objects;
+
 @Aggregate
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Slf4j
@@ -32,7 +30,7 @@ public class UserAggregate {
 
     @CommandHandler
     public UserAggregate(
-            UserCreateRequestCommand command,
+            UserCreateStartCommand command,
             UserRepository userRepository
     ) {
         /* There is a user in database using the incoming user's name. */
@@ -42,7 +40,7 @@ public class UserAggregate {
 
         /* Claim this user's name. */
         AggregateLifecycle.apply(
-                UserNameClaimRequestedEvent
+                UserCreateStartedEvent
                         .builder()
                         .userId(command.getUserId())
                         .userName(command.getUserName())
@@ -51,7 +49,7 @@ public class UserAggregate {
     }
 
     @EventSourcingHandler
-    public void on(UserNameClaimRequestedEvent event) {
+    public void on(UserCreateStartedEvent event) {
         this.userName = event.getUserName();
         this.userId = event.getUserId();
     }
@@ -59,7 +57,7 @@ public class UserAggregate {
     @CommandHandler
     public void on(UserCreateCompleteCommand command) {
         AggregateLifecycle.apply(
-                UserCreatedEvent
+                UserCreateCompletedEvent
                         .builder()
                         .userName(command.getUserName())
                         .userId(command.getUserId())
@@ -68,13 +66,20 @@ public class UserAggregate {
     }
 
     @EventSourcingHandler
-    public void on(UserCreatedEvent event) {
+    public void on(UserCreateCompletedEvent event) {
         this.userName = event.getUserName();
         this.userId = event.getUserId();
     }
 
     @CommandHandler
     public void on(UserUpdateStartCommand command, UserRepository userRepository) {
+        var existing = userRepository.getOne(command.getUserId())
+                .orElseThrow(() -> new UserNotFoundException(command.getUserId()));
+
+        if (Objects.equals(existing.getName(), command.getUserName())) {
+            throw new IdenticalUserNameException(command.getUserName());
+        }
+
         userRepository.getOne(command.getUserName()).ifPresent(
                 (u) -> {
                     if (u.getId() != command.getUserId()) {
@@ -87,7 +92,7 @@ public class UserAggregate {
                 UserUpdateStartedEvent
                         .builder()
                         .userId(command.getUserId())
-                        .oldUserName(command.getOldUserName())
+                        .oldUserName(existing.getName())
                         .userName(command.getUserName())
                         .build()
         );
@@ -116,8 +121,25 @@ public class UserAggregate {
         this.userName = event.getUserName();
     }
 
-//    @EventSourcingHandler
-//    public void on(UserUpdateStartedEvent event) {
-//        this.userId = event.getUserId();
-//    }
+    @CommandHandler
+    public void on(UserCreateRejectCommand command) {
+        AggregateLifecycle.apply(
+                UserCreateRejectedEvent
+                        .builder()
+                        .userId(command.getUserId())
+                        .userName(command.getUserName())
+                        .build()
+        );
+    }
+
+    @CommandHandler
+    public void on(UserUpdateRejectCommand command) {
+        AggregateLifecycle.apply(
+                UserUpdateRejectedEvent
+                        .builder()
+                        .userId(command.getUserId())
+                        .userName(command.getUserName())
+                        .build()
+        );
+    }
 }

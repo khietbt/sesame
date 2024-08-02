@@ -1,6 +1,6 @@
 package io.github.khietbt.modules.user.presentation.rest.controllers;
 
-import io.github.khietbt.modules.user.application.commands.UserNameClaimCreateCommand;
+import io.github.khietbt.modules.user.application.commands.UserCreateUserNameClaimCommand;
 import io.github.khietbt.modules.user.domain.valueobjects.UserId;
 import io.github.khietbt.modules.user.domain.valueobjects.UserName;
 import io.github.khietbt.modules.user.presentation.rest.requests.UserNameClaimCreateRequest;
@@ -24,7 +24,7 @@ public class UserNameClaimCreateController {
         var userId = new UserId(UUID.randomUUID());
 
         return commandGateway.send(
-                UserNameClaimCreateCommand
+                UserCreateUserNameClaimCommand
                         .builder()
                         .userId(userId)
                         .userName(userName)
