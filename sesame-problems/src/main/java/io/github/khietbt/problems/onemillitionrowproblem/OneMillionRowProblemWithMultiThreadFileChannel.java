@@ -5,12 +5,12 @@ import lombok.extern.slf4j.Slf4j;
 import java.time.Duration;
 
 @Slf4j
-public class OneMillionRowProblemWithFileChannel {
+public class OneMillionRowProblemWithMultiThreadFileChannel {
     public static void main(String[] args) {
         var character = 'a';
-        var simpleCounter = new FileChannelCounter("/home/khietbt/largefile");
+        var simpleCounter = new MultiThreadFileChannelCounter("/home/khietbt/largefile");
 
-        OneMillionRowProblemWithFileChannel.count(character, simpleCounter);
+        OneMillionRowProblemWithMultiThreadFileChannel.count(character, simpleCounter);
     }
 
     private static void count(char c, AbstractCharacterInFileCounter counter) {

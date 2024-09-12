@@ -6,7 +6,7 @@ Reference: https://dev.to/jigarjm/high-throughput-file-reading-in-java-25oe
 
 ## Testing with a medium file
 
-### Creating file
+### Creating the file
 
 dd if=/dev/urandom bs=100000 count=50 | base64 > mediumfile
 
@@ -17,3 +17,15 @@ mediumfile: 6754388 bytes
 FileInputStream: 17818 ms
 BufferedReader: 561 ms
 FileChannelCounter & MappedByteBuffer: 97 ms
+
+## Testing with a large file
+
+### Creating the file
+
+dd if=/dev/urandom bs=20000000 count=50 | base64 > largefile
+
+### Results
+
+FileChannelCounter: 5168 ms
+MultiThreadFileChannelCounter:  1651 ms (8 threads)
+MultiThreadFileChannelCounter on SSD:  1552 ms (8 threads)
