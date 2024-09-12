@@ -16,3 +16,4 @@ mediumfile: 6754388 bytes
 
 FileInputStream: 17818 ms
 BufferedReader: 561 ms
+FileChannelCounter & MappedByteBuffer: 97 ms
