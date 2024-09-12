@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public abstract class AbstractCharacterInFileCounter implements CharacterCounter {
-    protected final String file;
+    private final String file;
 
     protected AbstractCharacterInFileCounter(String file) {
         this.file = file;

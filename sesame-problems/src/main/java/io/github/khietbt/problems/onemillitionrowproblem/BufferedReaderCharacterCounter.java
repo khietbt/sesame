@@ -2,10 +2,11 @@ package io.github.khietbt.problems.onemillitionrowproblem;
 
 import lombok.SneakyThrows;
 
-import java.io.FileInputStream;
+import java.io.BufferedReader;
+import java.io.FileReader;
 
-public class FileInputStreamCharacterCounter extends AbstractCharacterInFileCounter {
-    public FileInputStreamCharacterCounter(String file) {
+public class BufferedReaderCharacterCounter extends AbstractCharacterInFileCounter {
+    public BufferedReaderCharacterCounter(String file) {
         super(file);
     }
 
@@ -13,18 +14,15 @@ public class FileInputStreamCharacterCounter extends AbstractCharacterInFileCoun
     @SneakyThrows
     public Long count(char letter) {
         Long count = 0L;
-        int processed = 0;
 
-        try (FileInputStream fis = new FileInputStream(this.getFile())) {
+        try (var reader = new BufferedReader(new FileReader(this.getFile()))) {
             int character;
 
             /* Read until the end of file. */
-            while ((character = fis.read()) != -1) {
+            while ((character = reader.read()) != -1) {
                 if (character == letter) {
                     count++;
                 }
-
-                processed++;
             }
         }
 
