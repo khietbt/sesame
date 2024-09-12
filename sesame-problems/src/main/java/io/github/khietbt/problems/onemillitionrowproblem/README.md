@@ -27,5 +27,5 @@ dd if=/dev/urandom bs=20000000 count=50 | base64 > largefile
 ### Results
 
 FileChannelCounter: 5168 ms
-MultiThreadFileChannelCounter:  1651 ms (8 threads)
-MultiThreadFileChannelCounter on SSD:  1552 ms (8 threads)
+MultiThreadFileChannelCounter:  1516 ms (8 threads)
+VirtualMultiThreadFileChannelCounter:  1471 ms (8 threads)
