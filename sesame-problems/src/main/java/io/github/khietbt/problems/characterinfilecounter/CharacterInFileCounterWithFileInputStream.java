@@ -1,10 +1,7 @@
 package io.github.khietbt.problems.characterinfilecounter;
 
-import lombok.extern.slf4j.Slf4j;
-
 import java.time.Duration;
 
-@Slf4j
 public class CharacterInFileCounterWithFileInputStream {
     public static void main(String[] args) {
         var character = 'a';

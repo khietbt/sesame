@@ -1,31 +1,21 @@
 package io.github.khietbt.problems.onebillionrows;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URISyntaxException;
-import java.nio.channels.FileChannel;
-import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
-import java.time.Duration;
 
 public class OneBillionRows {
     public static void main(String[] args) throws IOException, URISyntaxException {
-        final String fileName = "/OneBillionRows/weather_stations.csv";
-        final Path path = Path.of(OneBillionRows.class.getResource(fileName).toURI());
+        final String fileName = "/weather_stations.csv";
 
-        long startTime = System.currentTimeMillis();
+        try (var is = OneBillionRows.class.getResourceAsStream(fileName)) {
+            assert is != null;
 
-        try (var fileChannel = FileChannel.open(path, StandardOpenOption.READ)) {
-            var buffer = fileChannel.map(FileChannel.MapMode.READ_ONLY, 0, fileChannel.size());
-
-            while (buffer.hasRemaining()) {
-                buffer.get();
-            }
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+            reader.lines().forEach(
+                    System.out::println
+            );
         }
-
-        long endTime = System.currentTimeMillis();
-
-        final Duration eta = Duration.ofMillis(endTime - startTime);
-
-        System.out.println("Time taken: " + eta.toMillis() + " ms");
     }
 }
