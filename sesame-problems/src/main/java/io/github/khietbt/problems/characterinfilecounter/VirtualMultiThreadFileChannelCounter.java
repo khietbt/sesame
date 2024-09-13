@@ -1,4 +1,4 @@
-package io.github.khietbt.problems.onemillitionrowproblem;
+package io.github.khietbt.problems.characterinfilecounter;
 
 import lombok.Getter;
 import lombok.SneakyThrows;
@@ -8,7 +8,7 @@ import java.nio.channels.FileChannel;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-class CountingThread extends Thread {
+class VirtualCountingThread extends Thread {
     private final MappedByteBuffer buffer;
     private final char letter;
 
@@ -16,7 +16,7 @@ class CountingThread extends Thread {
     private Long count;
 
 
-    public CountingThread(MappedByteBuffer buffer, char letter) {
+    public VirtualCountingThread(MappedByteBuffer buffer, char letter) {
         this.buffer = buffer;
         this.letter = letter;
         this.count = 0L;
@@ -32,8 +32,8 @@ class CountingThread extends Thread {
     }
 }
 
-public class MultiThreadFileChannelCounter extends AbstractCharacterInFileCounter {
-    public MultiThreadFileChannelCounter(String file) {
+public class VirtualMultiThreadFileChannelCounter extends AbstractCharacterInFileCounter {
+    public VirtualMultiThreadFileChannelCounter(String file) {
         super(file);
     }
 
@@ -46,7 +46,8 @@ public class MultiThreadFileChannelCounter extends AbstractCharacterInFileCounte
             var fileSize = channel.size();
             var totalThreads = Runtime.getRuntime().availableProcessors();
 
-            var threads = new ArrayList<CountingThread>();
+            var threads = new ArrayList<Thread>();
+            var counters = new ArrayList<VirtualCountingThread>();
 
             for (var i = 0; i < totalThreads; i++) {
                 var chunkSize = fileSize / totalThreads;
@@ -54,17 +55,18 @@ public class MultiThreadFileChannelCounter extends AbstractCharacterInFileCounte
 
                 var buffer = channel.map(FileChannel.MapMode.READ_ONLY, start, chunkSize);
 
-                var thread = new CountingThread(buffer, letter);
+                var counter = new VirtualCountingThread(buffer, letter);
+                var thread = Thread.startVirtualThread(counter);
 
                 threads.add(thread);
-                thread.start();
+                counters.add(counter);
             }
 
             for (var thread : threads) {
                 thread.join();
             }
 
-            return threads.stream().map(CountingThread::getCount).reduce(0L, Long::sum);
+            return counters.stream().map(VirtualCountingThread::getCount).reduce(0L, Long::sum);
         }
     }
 }

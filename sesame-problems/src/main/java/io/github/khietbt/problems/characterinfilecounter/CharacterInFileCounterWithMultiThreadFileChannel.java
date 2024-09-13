@@ -1,16 +1,16 @@
-package io.github.khietbt.problems.onemillitionrowproblem;
+package io.github.khietbt.problems.characterinfilecounter;
 
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.Duration;
 
 @Slf4j
-public class OneMillionRowProblemWithVirtualMultiThreadFileChannel {
+public class CharacterInFileCounterWithMultiThreadFileChannel {
     public static void main(String[] args) {
         var character = 'a';
-        var simpleCounter = new VirtualMultiThreadFileChannelCounter("/home/khietbt/largefile");
+        var simpleCounter = new MultiThreadFileChannelCounter("/home/khietbt/largefile");
 
-        OneMillionRowProblemWithVirtualMultiThreadFileChannel.count(character, simpleCounter);
+        CharacterInFileCounterWithMultiThreadFileChannel.count(character, simpleCounter);
     }
 
     private static void count(char c, AbstractCharacterInFileCounter counter) {

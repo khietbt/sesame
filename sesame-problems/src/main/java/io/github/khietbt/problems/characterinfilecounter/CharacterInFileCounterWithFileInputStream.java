@@ -1,16 +1,16 @@
-package io.github.khietbt.problems.onemillitionrowproblem;
+package io.github.khietbt.problems.characterinfilecounter;
 
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.Duration;
 
 @Slf4j
-public class OneMillionRowProblemWithFileChannel {
+public class CharacterInFileCounterWithFileInputStream {
     public static void main(String[] args) {
         var character = 'a';
-        var simpleCounter = new FileChannelCounter("/home/khietbt/largefile");
+        var simpleCounter = new FileInputStreamCharacterCounter("/home/khietbt/mediumfile");
 
-        OneMillionRowProblemWithFileChannel.count(character, simpleCounter);
+        CharacterInFileCounterWithFileInputStream.count(character, simpleCounter);
     }
 
     private static void count(char c, AbstractCharacterInFileCounter counter) {
