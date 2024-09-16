@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URISyntaxException;
+import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -40,5 +41,12 @@ public class OneBillionRows {
         var end = System.currentTimeMillis();
 
         System.out.println("eta in ms: " + (end - start));
+
+        var max = Collections.max(data.entrySet(), Map.Entry.comparingByValue());
+        var min = Collections.min(data.entrySet(), Map.Entry.comparingByValue());
+
+        System.out.println("max: city: " + max.getKey() + ", temperature: " + max.getValue());
+        System.out.println("min: city: " + min.getKey() + ", temperature: " + min.getValue());
+        System.out.println("average: " + data.values().stream().mapToDouble(Double::doubleValue).average().orElse(0));
     }
 }
