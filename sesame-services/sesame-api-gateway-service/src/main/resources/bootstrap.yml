@@ -3,6 +3,8 @@ spring:
     name: sesame-api-gateway-service
   cloud:
     gateway:
+      default-filters:
+        - TokenRelay=
       routes:
         - id: sesame-profile-service
           uri: lb://sesame-profile-service
@@ -21,3 +23,18 @@ spring:
           enabled: true
   config:
     import: ${SPRING_CONFIG_IMPORT:configserver:http://localhost:8001}
+spring.security.oauth2:
+  resourceserver:
+    jwt:
+      jwk-set-uri: http://localhost:8080/realms/sesame/protocol/openid-connect/certs
+  client:
+    provider:
+      keycloak:
+        issuer-uri: http://localhost:8080/realms/sesame
+    registration:
+      sesame-client:
+        provider: keycloak
+        client-id: sesame-client
+        client-secret: KyMtJuTh8EekyHtukziz3UXBfG9z7RpF
+        authorization-grant-type: authorization_code
+        scope: openid

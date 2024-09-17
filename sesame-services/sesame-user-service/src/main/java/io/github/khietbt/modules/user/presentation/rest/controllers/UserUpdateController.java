@@ -1,7 +1,6 @@
 package io.github.khietbt.modules.user.presentation.rest.controllers;
 
 import io.github.khietbt.modules.user.application.commands.UserUpdateStartCommand;
-import io.github.khietbt.modules.user.domain.repositories.UserRepository;
 import io.github.khietbt.modules.user.domain.valueobjects.UserId;
 import io.github.khietbt.modules.user.domain.valueobjects.UserName;
 import io.github.khietbt.modules.user.presentation.rest.requests.UserUpdateRequest;
@@ -22,15 +21,12 @@ import java.util.concurrent.CompletableFuture;
 public class UserUpdateController {
     private final CommandGateway commandGateway;
 
-    private final UserRepository userRepository;
-
     @PatchMapping("/users/{id}")
     public CompletableFuture<?> update(
             @PathVariable("id") UUID id,
             @RequestBody UserUpdateRequest request
     ) {
         var userId = new UserId(id);
-        var userName = new UserName(request.getName());
 
         return commandGateway.send(
                 UserUpdateStartCommand
