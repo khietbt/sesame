@@ -32,9 +32,10 @@ spring.security.oauth2:
       keycloak:
         issuer-uri: http://localhost:8080/realms/sesame
     registration:
-      sesame-client:
+      keycloak:
         provider: keycloak
+        client-name: sesame-client
         client-id: sesame-client
         client-secret: KyMtJuTh8EekyHtukziz3UXBfG9z7RpF
         authorization-grant-type: authorization_code
-        scope: openid
+        scope: openid,offline_access,profile

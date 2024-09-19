@@ -32,11 +32,7 @@ public class ControllerConfiguration implements ResponseBodyAdvice<Object> {
         }
 
         return ResponseEntity.status(status).body(
-                WrapperResponse
-                        .builder()
-                        .status("error")
-                        .data(throwable.getMessage())
-                        .build()
+                WrapperResponse.error(throwable.getMessage())
         );
     }
 
@@ -58,7 +54,7 @@ public class ControllerConfiguration implements ResponseBodyAdvice<Object> {
                                 }
                             }
                     )
-                    .orElseGet(() -> e);
+                    .orElse(e);
         }
 
         return e;
@@ -78,12 +74,8 @@ public class ControllerConfiguration implements ResponseBodyAdvice<Object> {
             ServerHttpRequest request,
             ServerHttpResponse response
     ) {
-        if (!(original instanceof WrapperResponse<?>)) {
-            return WrapperResponse
-                    .builder()
-                    .data(original)
-                    .status("success")
-                    .build();
+        if (!(original instanceof WrapperResponse)) {
+            return WrapperResponse.success(original);
         }
 
         return original;
