@@ -29,13 +29,16 @@ spring.security.oauth2:
       jwk-set-uri: http://localhost:8080/realms/sesame/protocol/openid-connect/certs
   client:
     provider:
-      keycloak:
+      sesame:
         issuer-uri: http://localhost:8080/realms/sesame
     registration:
-      keycloak:
-        provider: keycloak
-        client-name: sesame-client
+      sesame:
+        provider: sesame
+        client-name: Sesame
         client-id: sesame-client
         client-secret: KyMtJuTh8EekyHtukziz3UXBfG9z7RpF
         authorization-grant-type: authorization_code
-        scope: openid,offline_access,profile
+        scope:
+          - openid
+          - offline_access
+          - profile

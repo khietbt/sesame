@@ -10,10 +10,6 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 @Configuration
 @EnableWebFluxSecurity
 public class SecurityConfiguration {
-    final String[] PUBLIC_ENDPOINTS = {
-            "/api/v1/sesame-user-service/sessions"
-    };
-
     final String[] DENIED_ENDPOINTS = {
             "/login/**"
     };
@@ -24,7 +20,6 @@ public class SecurityConfiguration {
                 .authorizeExchange(
                         auth -> auth
                                 .pathMatchers(DENIED_ENDPOINTS).denyAll()
-                                .pathMatchers(PUBLIC_ENDPOINTS).permitAll()
                                 .anyExchange().authenticated()
                 )
                 .oauth2Login(Customizer.withDefaults())
