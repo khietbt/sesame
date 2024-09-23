@@ -7,7 +7,6 @@ import io.github.khietbt.modules.user.presentation.rest.responses.UserGetOneById
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.queryhandling.QueryGateway;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,12 +22,6 @@ public class UserGetOneByIdController {
 
     @GetMapping("/users/{id}")
     public CompletableFuture<?> getOneById(@PathVariable(name = "id") UUID id) {
-
-        var context = SecurityContextHolder.getContext();
-        var authentication = context.getAuthentication();
-
-        log.info("{}", authentication.getAuthorities());
-
         var query = new UserGetOneByIdQuery(new UserId(id));
 
         return queryGateway
