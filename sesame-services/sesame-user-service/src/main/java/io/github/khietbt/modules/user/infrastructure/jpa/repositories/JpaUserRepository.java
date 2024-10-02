@@ -7,6 +7,8 @@ import io.github.khietbt.modules.user.domain.valueobjects.UserId;
 import io.github.khietbt.modules.user.domain.valueobjects.UserName;
 import io.github.khietbt.modules.user.infrastructure.jpa.models.JpaUser;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +18,12 @@ import java.util.UUID;
 @Repository
 public interface JpaUserRepository extends JpaRepository<JpaUser, UUID>, UserRepository {
     Optional<JpaUser> findByName(String name);
+
+    @Override
+    default Page<User> getList(Integer number, Integer size) {
+        return this.findAll(PageRequest.of(number, size))
+                .map(JpaUser::toDomain);
+    }
 
     @Override
     default Optional<User> getOne(UserId id) {
