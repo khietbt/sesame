@@ -1,34 +1,36 @@
 import {httpClient} from "ra-keycloak";
 import keycloak from "./keycloak.ts";
 
-export const dataProvider = {
-  getList: async (resource: any, params: any) => {
-    const client = httpClient(keycloak);
-    const number = 0;
-    const size = 1;
+export const dataProvider = (baseUrl: string) => ({
+    getList: async (resource: string, params: any) => {
+      const client = httpClient(keycloak);
+      const {page, perPage} = params.pagination;
+      const [serviceName, serviceResource] = resource.split(":");
 
-    const url = `http://localhost:8004/users?number=${number}&size=${size}`;
+      const url = `${baseUrl}/api/v1/${serviceName}/${serviceResource}?number=${page - 1}&size=${perPage}`;
 
-    return client(url, {})
-      .then(
-        ({json}) => ({
-          data: json.content,
-          total: json.page.totalPages
-        })
-      )
-  },
-  getOne: async (resource: string, params: any) => {
-    const {id} = params;
+      return client(url, {})
+        .then(
+          ({json}) => ({
+            data: json.content,
+            total: json.page.totalPages
+          })
+        )
+    },
+    getOne: async (resource: string, params: any) => {
+      const {id} = params;
 
-    const client = httpClient(keycloak);
+      const client = httpClient(keycloak);
+      const [serviceName, serviceResource] = resource.split(":");
 
-    const url = `http://localhost:8004/${resource}/${id}`;
+      const url = `${baseUrl}/api/v1/${serviceName}/${serviceResource}/${id}`;
 
-    return client(url, {})
-      .then(({json}) => (
-        {
-          data: json
-        }
-      ))
+      return client(url, {})
+        .then(({json}) => (
+          {
+            data: json
+          }
+        ))
+    }
   }
-}
+);
