@@ -1,6 +1,6 @@
 import {Admin, EditGuesser, ListGuesser, Resource, ShowGuesser,} from "react-admin";
 import {Layout} from "./Layout";
-import {dataProvider} from "./dataProvider";
+import {dataProvider} from "./authentication/dataProvider.ts";
 import {keycloakAuthProvider} from "ra-keycloak";
 import keycloak from "./authentication/keycloak";
 
