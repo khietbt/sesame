@@ -22,6 +22,8 @@ public class SecurityConfiguration {
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(
                         authorize -> authorize
+                                .requestMatchers("/swagger-ui/**").anonymous()
+                                .requestMatchers("/v3/api-docs/**").anonymous()
                                 .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()));

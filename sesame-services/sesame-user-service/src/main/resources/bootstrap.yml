@@ -22,3 +22,7 @@ axoniq:
   #    dlq-mode: NONE
   axonserver:
     servers: ${AXON_SERVER_HOST:localhost}:${AXON_SERVER_PORT:8124}
+# swagger-ui custom path
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
