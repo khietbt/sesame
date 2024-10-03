@@ -1,26 +1,6 @@
 spring:
   application:
     name: sesame-api-gateway-service
-  cloud:
-    gateway:
-      default-filters:
-        - TokenRelay=
-      routes:
-        - id: sesame-profile-service
-          uri: lb://sesame-profile-service
-          predicates:
-            - Path=/api/v1/sesame-profile-service/**
-          filters:
-            - RewritePath=/api/v1/sesame-profile-service/(?<remains>.*), /$\{remains}
-        - id: sesame-user-service
-          uri: lb://sesame-user-service
-          predicates:
-            - Path=/api/v1/sesame-user-service/**
-          filters:
-            - RewritePath=/api/v1/sesame-user-service/(?<remains>.*), /$\{remains}
-      discovery:
-        locator:
-          enabled: true
   config:
     import: ${SPRING_CONFIG_IMPORT:configserver:http://localhost:8001}
 spring.security.oauth2:
