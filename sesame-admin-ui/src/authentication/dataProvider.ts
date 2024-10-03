@@ -1,7 +1,9 @@
 import {httpClient} from "ra-keycloak";
 import keycloak from "./keycloak.ts";
+import {addRefreshAuthToDataProvider} from "react-admin";
+import {refreshAuth} from "./refreshAuth.ts";
 
-export const dataProvider = (baseUrl: string) => ({
+const provider = (baseUrl: string) => ({
     getList: async (resource: string, params: any) => {
       const client = httpClient(keycloak);
       const {page, perPage} = params.pagination;
@@ -34,3 +36,5 @@ export const dataProvider = (baseUrl: string) => ({
     }
   }
 );
+
+export const dataProvider = (baseUrl: string) => addRefreshAuthToDataProvider(provider(baseUrl), refreshAuth);

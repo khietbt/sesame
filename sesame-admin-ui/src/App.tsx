@@ -1,12 +1,9 @@
 import {Admin, EditGuesser, Resource,} from "react-admin";
 import {Layout} from "./Layout";
 import {dataProvider} from "./authentication/dataProvider.ts";
-import {keycloakAuthProvider} from "ra-keycloak";
-import keycloak from "./authentication/keycloak";
 import {UserList} from "./resources/sesame-user-service/user";
 import {UserShow} from "./resources/sesame-user-service/user/UserShow.tsx";
-
-const authProvider = keycloakAuthProvider(keycloak);
+import {authProvider} from "./authentication/authProvider.ts";
 
 export const App = () => {
   return (

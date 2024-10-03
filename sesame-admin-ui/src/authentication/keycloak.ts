@@ -7,12 +7,24 @@ const keycloak = new Keycloak({
 });
 
 try {
-  const authenticated = await keycloak.init({
+  await keycloak.init({
     onLoad: 'login-required'
   });
-  console.log(`User is ${authenticated ? 'authenticated' : 'not authenticated'}`);
+
+  keycloak.onTokenExpired = () => {
+    keycloak.updateToken(10).then(r => {
+      if (r) {
+        console.log("Access token has been refreshed successfully");
+
+        return;
+      }
+
+      console.error("Failed to refresh access token.")
+    });
+  }
 } catch (error) {
   console.error('Failed to initialize keycloak adapter:', error);
 }
+
 
 export default keycloak;
