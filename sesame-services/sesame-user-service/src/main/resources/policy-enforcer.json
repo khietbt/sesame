@@ -1,0 +1,9 @@
+{
+  "realm": "sesame",
+  "auth-server-url": "http://localhost:8080",
+  "resource": "sesame-client",
+  "credentials": {
+    "secret": "EMLnBMtp2QM23jw2zNMwz5u9dXTzf0D6"
+  },
+  "http-method-as-scope": true
+}

@@ -1,3 +1,5 @@
+server:
+  forward-headers-strategy: framework
 spring:
   application:
     name: sesame-api-gateway-service
@@ -16,9 +18,21 @@ spring.security.oauth2:
         provider: sesame
         client-name: Sesame
         client-id: sesame-client
-        client-secret: KyMtJuTh8EekyHtukziz3UXBfG9z7RpF
+        client-secret: hdzBuuN3fDdaDYHjyzw785i9N0ayQYcI
         authorization-grant-type: authorization_code
         scope:
           - openid
           - offline_access
           - profile
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    config-url: /v3/api-docs/swagger-config
+    urls:
+      - url: /v3/api-docs
+        name: Sesame Api Gateway Service
+      - url: /api/v1/sesame-user-service/v3/api-docs
+        name: Sesame User Service

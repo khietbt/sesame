@@ -22,7 +22,7 @@ public class UserGetOneByIdController {
     private QueryGateway queryGateway;
 
     @GetMapping("/users/{id}")
-    public CompletableFuture<?> getOneById(@PathVariable(name = "id") UUID id) {
+    public CompletableFuture<UserGetOneByIdResponse> getOneById(@PathVariable(name = "id") UUID id) {
         var query = new UserGetOneByIdQuery(new UserId(id));
 
         return queryGateway

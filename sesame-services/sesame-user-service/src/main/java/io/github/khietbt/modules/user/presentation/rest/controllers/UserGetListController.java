@@ -21,7 +21,7 @@ public class UserGetListController {
     private QueryGateway queryGateway;
 
     @GetMapping("/users")
-    public CompletableFuture<?> getList(
+    public CompletableFuture<Page<UserGetListItemResponse>> getList(
             @RequestParam(name = "number", defaultValue = "0") Integer number,
             @RequestParam(name = "size", defaultValue = "10") Integer size
     ) {

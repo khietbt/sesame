@@ -23,8 +23,8 @@ public class OpenApiConfiguration {
                 .addSecurityItem(new SecurityRequirement().addList(OAUTH_SCHEME_NAME))
                 .info(
                         new Info()
-                                .title("Todos Management Service")
-                                .description("A service providing todos.")
+                                .title("Sesame User Service")
+                                .description("A service providing users.")
                                 .version("1.0")
                 );
     }
