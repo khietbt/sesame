@@ -34,11 +34,6 @@
         </dependency>
         <dependency>
             <groupId>org.keycloak</groupId>
-            <artifactId>keycloak-policy-enforcer</artifactId>
-            <version>25.0.6</version>
-        </dependency>
-        <dependency>
-            <groupId>org.keycloak</groupId>
             <artifactId>keycloak-core</artifactId>
             <version>25.0.6</version>
         </dependency>

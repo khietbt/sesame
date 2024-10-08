@@ -1,8 +1,5 @@
 package io.github.khietbt.configurations;
 
-import org.keycloak.adapters.authorization.integration.jakarta.ServletPolicyEnforcerFilter;
-import org.keycloak.representations.adapters.config.PolicyEnforcerConfig;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -19,9 +16,6 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity(debug = true)
 public class SecurityConfiguration {
-    @Autowired
-    private PolicyEnforcerConfig policyEnforcerConfig;
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -33,10 +27,6 @@ public class SecurityConfiguration {
                                 .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()))
-//                .addFilterAfter(
-//                        createPolicyEnforcerFilter(),
-//                        BearerTokenAuthenticationFilter.class
-//                )
         ;
 
         return http.build();
@@ -66,9 +56,5 @@ public class SecurityConfiguration {
         source.registerCorsConfiguration("/**", configuration);
 
         return source;
-    }
-
-    private ServletPolicyEnforcerFilter createPolicyEnforcerFilter() {
-        return new ServletPolicyEnforcerFilter(request -> this.policyEnforcerConfig);
     }
 }

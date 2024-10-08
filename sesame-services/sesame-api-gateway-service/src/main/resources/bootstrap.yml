@@ -36,13 +36,3 @@ springdoc:
         name: Sesame Api Gateway Service
       - url: /api/v1/sesame-user-service/v3/api-docs
         name: Sesame User Service
-
-keycloak:
-  policy-enforcer-config:
-    realm: ${KEYCLOAK_REALM}
-    auth-server-url: ${KEYCLOAK_SERVER}
-    resource: ${KEYCLOAK_CLIENT_ID}
-    credentials:
-      secret: ${KEYCLOAK_CLIENT_SECRET}
-    http-method-as-scope: true
-    enforcement-mode: enforcing
