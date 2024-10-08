@@ -8,17 +8,17 @@ spring:
 spring.security.oauth2:
   resourceserver:
     jwt:
-      jwk-set-uri: http://localhost:8080/realms/sesame/protocol/openid-connect/certs
+      jwk-set-uri: ${KEYCLOAK_SERVER}/realms/${KEYCLOAK_REALM}/protocol/openid-connect/certs
   client:
     provider:
       sesame:
-        issuer-uri: http://localhost:8080/realms/sesame
+        issuer-uri: ${KEYCLOAK_SERVER}/realms/${KEYCLOAK_REALM}
     registration:
       sesame:
         provider: sesame
         client-name: Sesame
-        client-id: sesame-client
-        client-secret: hdzBuuN3fDdaDYHjyzw785i9N0ayQYcI
+        client-id: ${KEYCLOAK_CLIENT_ID}
+        client-secret: ${KEYCLOAK_CLIENT_SECRET}
         authorization-grant-type: authorization_code
         scope:
           - openid
@@ -36,3 +36,13 @@ springdoc:
         name: Sesame Api Gateway Service
       - url: /api/v1/sesame-user-service/v3/api-docs
         name: Sesame User Service
+
+keycloak:
+  policy-enforcer-config:
+    realm: ${KEYCLOAK_REALM}
+    auth-server-url: ${KEYCLOAK_SERVER}
+    resource: ${KEYCLOAK_CLIENT_ID}
+    credentials:
+      secret: ${KEYCLOAK_CLIENT_SECRET}
+    http-method-as-scope: true
+    enforcement-mode: enforcing

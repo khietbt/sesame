@@ -26,3 +26,14 @@ axoniq:
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
+
+keycloak:
+  policy-enforcer-config:
+    realm: ${KEYCLOAK_REALM}
+    auth-server-url: ${KEYCLOAK_SERVER}
+    resource: ${KEYCLOAK_CLIENT_ID}
+    credentials:
+      secret: ${KEYCLOAK_CLIENT_SECRET}
+    http-method-as-scope: true
+    enforcement-mode: enforcing
+    lazy-load-paths: true

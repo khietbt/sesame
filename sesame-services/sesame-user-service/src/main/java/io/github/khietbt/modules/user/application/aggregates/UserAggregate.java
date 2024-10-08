@@ -85,7 +85,7 @@ public class UserAggregate {
 
         userRepository.getOne(command.getUserName()).ifPresent(
                 (u) -> {
-                    if (u.getId() != command.getUserId()) {
+                    if (!Objects.equals(u.getId(), command.getUserId())) {
                         throw new UserAlreadyExistsException(command.getUserName());
                     }
                 }
