@@ -6,6 +6,7 @@ import io.github.khietbt.shared.domain.exceptions.NotFoundException;
 import org.axonframework.commandhandling.CommandExecutionException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -13,8 +14,8 @@ import java.lang.reflect.Constructor;
 
 @ControllerAdvice
 public class ControllerConfiguration {
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<Object> handle(RuntimeException e) {
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Object> handle(Exception e) {
         var status = HttpStatus.INTERNAL_SERVER_ERROR;
 
         var throwable = this.getCause(e);
@@ -23,6 +24,8 @@ public class ControllerConfiguration {
             status = HttpStatus.CONFLICT;
         } else if (throwable instanceof NotFoundException) {
             status = HttpStatus.NOT_FOUND;
+        } else if (throwable instanceof AuthorizationDeniedException) {
+            status = HttpStatus.FORBIDDEN;
         }
 
         return ResponseEntity.status(status).body(
@@ -30,7 +33,7 @@ public class ControllerConfiguration {
         );
     }
 
-    private Throwable getCause(RuntimeException e) {
+    private Throwable getCause(Exception e) {
         if (e instanceof CommandExecutionException ex) {
             return ex.<ExceptionDetails>getDetails()
                     .map(
