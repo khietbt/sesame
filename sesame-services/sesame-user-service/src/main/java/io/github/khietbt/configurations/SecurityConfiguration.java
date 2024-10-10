@@ -74,8 +74,9 @@ public class SecurityConfiguration {
         return source;
     }
 
+    @SuppressWarnings("unchecked")
     @Bean
-    AuthoritiesConverter realmRolesAuthoritiesConverter() {
+    public AuthoritiesConverter realmRolesAuthoritiesConverter() {
         return claims -> {
             var realmAccess = Optional.ofNullable((Map<String, Object>) claims.get("realm_access"));
             var roles = realmAccess.flatMap(map -> Optional.ofNullable((List<String>) map.get("roles")));
@@ -87,7 +88,7 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    GrantedAuthoritiesMapper authenticationConverter(
+    public GrantedAuthoritiesMapper authenticationConverter(
             Converter<Map<String, Object>, Collection<GrantedAuthority>> authoritiesConverter) {
         return (authorities) -> authorities.stream()
                 .filter(authority -> authority instanceof OidcUserAuthority)

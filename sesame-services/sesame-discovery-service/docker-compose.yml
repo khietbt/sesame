@@ -1,0 +1,16 @@
+services:
+  sesame-discovery-service:
+    container_name: sesame-discovery-service
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      SERVER_PORT: 8002
+      EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE: http://host.docker.internal:8002/eureka
+      EUREKA_INSTANCE_HOSTNAME: host.docker.internal
+      SPRING_CONFIG_IMPORT: configserver:http://host.docker.internal:8001
+    ports:
+      - 8002:8002
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    restart: unless-stopped
