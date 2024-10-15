@@ -1,20 +1,18 @@
 package io.github.khietbt.modules.user.infrastructure.axon;
 
-import org.axonframework.commandhandling.CommandBus;
+import org.axonframework.queryhandling.QueryBus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class AxonCommandConfiguration {
-
+public class AxonQueryConfiguration {
     @Autowired
-    void commandBus(
-            CommandBus commandBus,
+    public void queryBus(
+            QueryBus queryBus,
             AxonMessageHandlerInterceptor axonMessageHandlerInterceptor,
             AxonMessageDispatchInterceptor axonMessageDispatchInterceptor
     ) {
-        //noinspection
-        commandBus.registerHandlerInterceptor(axonMessageHandlerInterceptor);
-        commandBus.registerDispatchInterceptor(axonMessageDispatchInterceptor);
+        queryBus.registerHandlerInterceptor(axonMessageHandlerInterceptor);
+        queryBus.registerDispatchInterceptor(axonMessageDispatchInterceptor);
     }
 }

@@ -2,3 +2,14 @@ KEYCLOAK_SERVER: http://localhost:8080
 KEYCLOAK_REALM: sesame
 KEYCLOAK_CLIENT_ID: sesame-client
 KEYCLOAK_CLIENT_SECRET: EMLnBMtp2QM23jw2zNMwz5u9dXTzf0D6
+
+logging:
+  level:
+    io:
+      github:
+        khietbt:
+          modules:
+            user:
+              infrastructure:
+                keycloak:
+                  clients: DEBUG

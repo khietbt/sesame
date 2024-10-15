@@ -6,6 +6,7 @@ import io.github.khietbt.modules.user.domain.repositories.UserRepository;
 import io.github.khietbt.modules.user.domain.valueobjects.UserId;
 import io.github.khietbt.modules.user.domain.valueobjects.UserName;
 import io.github.khietbt.modules.user.infrastructure.jpa.models.JpaUser;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,6 +17,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
+@Primary
 public interface JpaUserRepository extends JpaRepository<JpaUser, UUID>, UserRepository {
     Optional<JpaUser> findByName(String name);
 

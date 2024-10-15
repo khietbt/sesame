@@ -30,10 +30,10 @@ public class UserGetOneByIdResponse {
                 .id(u.getId().getValue())
                 .name(u.getName().getValue())
                 .createdAt(u.getCreatedAt().getValue())
-                .updatedAt(u.getUpdatedAt().getValue())
-                .createdBy(u.getCreatedBy().getValue())
-                .updatedBy(u.getUpdatedBy().getValue())
-                .version(u.getVersion().getValue())
+//                .updatedAt(u.getUpdatedAt().getValue())
+//                .createdBy(u.getCreatedBy().getValue())
+//                .updatedBy(u.getUpdatedBy().getValue())
+//                .version(u.getVersion().getValue())
                 .build();
     }
 }
